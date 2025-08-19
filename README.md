@@ -1,4 +1,7 @@
-# 個人網站 & 部落格 (One-Page Website)
+# 個人網站 & 部落格
+
+一個使用 Next.js 建立的單頁式個人網站和部落格。
+
 - **專案目標：建立一個 單頁式個人網站，包含：**
 
   - 首頁介紹 (Hero)
@@ -43,6 +46,7 @@
 ---
 
 ## 專案結構
+
 ```
 my-blog/
 ├── content/blog/           # Markdown 部落格文章
@@ -55,7 +59,7 @@ my-blog/
 │   │   ├── About.tsx
 │   │   ├── Skills.tsx
 │   │   ├── Portfolio.tsx
-│   │   ├── Blog.tsx
+│   │   ├── BlogList.tsx
 │   │   └── Contact.tsx
 │   ├── data/               # JSON 資料來源
 │   │   ├── portfolio.json
@@ -71,21 +75,29 @@ my-blog/
 ├── tsconfig.json           # TypeScript 設定
 └── README.md               # 專案說明文件
 ```
+
 ## 安裝與啟動
 
 1. 安裝依賴套件：
+
 ```bash
 npm install
 ```
+
 2. 啟動開發模式：
+
 ```bash
 npm run dev
 ```
+
 3. 建置專案：
+
 ```
 npm run build
 ```
+
 4. 開啟瀏覽器並訪問：
+
 ```arduino
 http://localhost:3000
 ```
@@ -100,50 +112,54 @@ http://localhost:3000
 
 - 動畫：framer-motion + tsparticles
 
-- tsparticles (動態背景)
-
 - Markdown 處理：gray-matter + react-markdown
 
-- 部署：Vercel / Netlify(待定)
-
+- 部署：Vercel
 
 ## 部落格文章新增方式
 
 1. 在 content/blog/ 新增 .md 檔
 
 2. 使用 frontmatter 設定：
-    ```markdown
-    ---
-    title: "文章標題"
-    excerpt: "文章摘要"
-    ---
-    文章內容
-    ```
+
+   ```markdown
+   ---
+   title: "文章標題"
+   excerpt: "文章摘要"
+   ---
+
+   文章內容
+   ```
+
 3. 文章會自動出現在首頁 Blog 區塊
 
 ## 作品集新增方式
 
 1. 在 src/data/portfolio.json （或你設置的資料檔）新增專案：
-  ```json
-  {
-      "title": "專案名稱",
-      "description": "專案描述",
-      "image": "/images/project.png",
-      "link": "https://github.com/username/project"
-  }
-  ```
+
+```json
+{
+  "title": "專案名稱",
+  "description": "專案描述",
+  "image": "/images/project.png",
+  "link": "https://github.com/username/project"
+}
+```
+
 2. Portfolio 區塊會自動渲染卡片
 
 ## 技能新增方式
 
 1. 在 src/data/skills.json（或你設置的資料檔）新增技能：
+
 ```json
 {
-    "category": "前端",
-    "skills": [
-        { "name": "React", "level": 90 },
-        { "name": "TypeScript", "level": 85 }
-    ]
+  "category": "前端",
+  "skills": [
+    { "name": "React", "level": 90 },
+    { "name": "TypeScript", "level": 85 }
+  ]
 }
 ```
+
 2. Skills 區塊會自動更新

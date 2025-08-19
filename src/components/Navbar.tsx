@@ -89,7 +89,7 @@ export default function Navbar() {
             href="#contact"
             className="hover:text-blue-500 dark:hover:text-blue-400 transition"
           >
-            如何聯繫
+            現在聯繫
           </a>
         </div>
 
