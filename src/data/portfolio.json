@@ -1,0 +1,20 @@
+[
+  {
+    "title": "個人網站專案",
+    "description": "展示個人網站與部落格功能",
+    "image": "/images/project1.png",
+    "link": "https://github.com/username/project1"
+  },
+  {
+    "title": "開源專案管理工具",
+    "description": "一個小型的開源專案管理工具，使用 Node.js + React 開發",
+    "image": "/images/project2.png",
+    "link": "https://github.com/username/project2"
+  },
+  {
+    "title": "簡易電子商務網站",
+    "description": "展示產品、購物車與訂單流程的前端網站",
+    "image": "/images/project3.png",
+    "link": "https://github.com/username/project3"
+  }
+]
