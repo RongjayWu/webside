@@ -1,4 +1,6 @@
-# 個人網站 & 部落格 (One-Page Website)
+# 個人網站 & 部落格
+
+一個使用 Next.js 建立的單頁式個人網站和部落格。
 
 - **專案目標：建立一個 單頁式個人網站，包含：**
 
@@ -110,17 +112,16 @@ http://localhost:3000
 
 - 動畫：framer-motion + tsparticles
 
-- tsparticles (動態背景)
-
 - Markdown 處理：gray-matter + react-markdown
 
-- 部署：Vercel / Netlify(待定)
+- 部署：Vercel
 
 ## 部落格文章新增方式
 
 1. 在 content/blog/ 新增 .md 檔
 
 2. 使用 frontmatter 設定：
+
    ```markdown
    ---
    title: "文章標題"
@@ -129,6 +130,7 @@ http://localhost:3000
 
    文章內容
    ```
+
 3. 文章會自動出現在首頁 Blog 區塊
 
 ## 作品集新增方式
