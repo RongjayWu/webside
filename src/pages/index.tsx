@@ -6,6 +6,7 @@ import BlogList from '../components/BlogList';
 import Contact from '../components/Contact';
 import Background from '../components/Background';
 import Navbar from '../components/Navbar';
+import ScrollToTopButton from "../components/ScrollToTopButton";
 import { GetStaticProps } from 'next';
 import fs from 'fs';
 import path from 'path';
@@ -34,6 +35,7 @@ export default function Home({ posts }: HomeProps) {
         <BlogList posts={posts} />
         <Contact />
       </main>
+      <ScrollToTopButton />
     </div>
   );
 }

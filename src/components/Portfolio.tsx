@@ -1,23 +1,138 @@
+import { useEffect, useRef, useState } from 'react';
+
 const projects = [
-  { title: 'Project A', description: '前端專案範例' },
-  { title: 'Project B', description: '全端專案範例' },
+  { 
+    title: 'Project A', 
+    description: '這是一個使用React和TypeScript開發的前端專案，具有響應式設計和現代化的用戶界面。', 
+    completedDate: '2024年3月',
+    projectLink: 'https://github.com/username/project-a',
+    image: 'https://via.placeholder.com/300x200/3B82F6/ffffff?text=Project+A'
+  },
+  { 
+    title: 'Project B', 
+    description: '全端電商網站專案，使用Node.js後端API和React前端，包含用戶認證和支付功能。', 
+    completedDate: '2024年1月',
+    projectLink: 'https://github.com/username/project-b',
+    image: 'https://via.placeholder.com/300x200/10B981/ffffff?text=Project+B'
+  },
 ];
 
 export default function Portfolio() {
+  const projectRefs = useRef<HTMLDivElement[]>([]);
+  const [visibleIndexes, setVisibleIndexes] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    setVisibleIndexes(Array(projects.length).fill(false));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = Number(entry.target.getAttribute('data-index'));
+          setVisibleIndexes((prev) => {
+            const updated = [...prev];
+            updated[index] = entry.isIntersecting;
+            return updated;
+          });
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    projectRefs.current.forEach((el) => el && observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="portfolio" className="py-24 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4">
-      <h2 className="text-3xl font-bold mb-8 text-center">作品集</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {projects.map((proj, i) => (
-          <div
-            key={proj.title}
-            className="bg-white p-4 rounded shadow opacity-0 animate-fadeInUp transform hover:scale-105 hover:shadow-lg transition"
-            style={{ animationDelay: `${i * 0.2}s`, animationFillMode: 'forwards' }}
-          >
-            <h3 className="text-xl font-semibold">{proj.title}</h3>
-            <p className="text-gray-600">{proj.description}</p>
-          </div>
-        ))}
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-12 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
+          作品集
+        </h2>
+        
+        <div className="grid grid-cols-1 gap-8">
+          {projects.map((proj, i) => (
+            <div
+              key={proj.title}
+              ref={(el) => { projectRefs.current[i] = el!; }}
+              data-index={i}
+              className={`
+                bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden
+                transition-all duration-700 cursor-pointer transform-gpu
+                hover:shadow-xl hover:scale-102 hover:-translate-y-2 
+                hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50
+                dark:hover:from-blue-900/20 dark:hover:to-purple-900/20
+                dark:text-gray-100 dark:shadow-gray-700/20
+                ${visibleIndexes[i] 
+                  ? "translate-y-0 opacity-100" 
+                  : "translate-y-10 opacity-0"
+                }
+              `}
+              style={{ 
+                transitionDelay: `${i * 150}ms` // 交錯動畫效果
+              }}
+            >
+              <div className="flex flex-col sm:flex-row h-full">
+                {/* 左方20%區域 - 圖片 */}
+                <div className="sm:w-1/5 w-full h-48 sm:h-auto">
+                  <img 
+                    src={proj.image} 
+                    alt={proj.title}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                </div>
+                
+                {/* 右方80%區域 - 內容 */}
+                <div className="sm:w-4/5 w-full p-6 flex flex-col justify-between">
+                  <div className="space-y-3">
+                    {/* 專案名稱 */}
+                    <h3 className="text-2xl font-bold transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
+                      {proj.title}
+                    </h3>
+                    
+                    {/* 專案簡介 */}
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                      {proj.description}
+                    </p>
+                    
+                    {/* 完成日期 */}
+                    <p className="text-gray-600 dark:text-gray-400">
+                      <span className="font-medium">完成日期：</span>{proj.completedDate}
+                    </p>
+                    
+                    {/* 專案連結 */}
+                    <p className="text-gray-600 dark:text-gray-400">
+                      <span className="font-medium">專案連結：</span>
+                      <a 
+                        href={proj.projectLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-300 ml-1"
+                      >
+                        {proj.projectLink}
+                      </a>
+                    </p>
+                  </div>
+                  
+                  {/* 詳情按鈕 */}
+                  <div className="mt-4 pt-4">
+                    <a
+                      href={proj.projectLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-md"
+                    >
+                      查看詳情
+                      <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
