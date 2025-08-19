@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 
 const projects = [
   { 
-    title: 'Project A', 
-    description: '這是一個使用React和TypeScript開發的前端專案，具有響應式設計和現代化的用戶界面。', 
-    completedDate: '2024年3月',
-    projectLink: 'https://github.com/username/project-a',
-    image: 'https://via.placeholder.com/300x200/3B82F6/ffffff?text=Project+A'
+    title: '一站式個人網站(本站)', 
+    description: '一個使用 Next.js 建立的單頁式個人網站和部落格，具有響應式設計和現代化的用戶界面，用來存放各種學過的技能，有關我的相關資料。', 
+    completedDate: '2025年8月~開發中',
+    projectLink: 'https://github.com/RongjayWu/webside.git',
+    image: 'https://i.postimg.cc/fbprNMvY/Copilot-20250819-232817.png'
   },
   { 
     title: 'Project B', 
