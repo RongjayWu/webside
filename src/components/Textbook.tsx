@@ -10,7 +10,7 @@ export default function TextbookPreview() {
 				{textbooks.map((book, i) => (
 					<div
 						key={book.subject + book.title}
-						className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 flex flex-col items-center text-center"
+								className="bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-md p-8 flex flex-col items-center text-center"
 					>
 						<h3 className="text-2xl font-bold mb-2 text-blue-600 dark:text-blue-400">{book.subject}</h3>
 						<h4 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300">{book.title}</h4>

@@ -44,7 +44,7 @@ export default function Contact({ tutorMode = false }: ContactProps) {
         <div
           ref={contactRef}
           className={`
-            bg-white dark:bg-gray-800 rounded-lg shadow-md p-8
+            bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-md p-8
             transition-all duration-700 transform-gpu
             hover:shadow-xl hover:scale-102 hover:-translate-y-2 
             hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50

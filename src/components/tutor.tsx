@@ -32,7 +32,7 @@ export default function TutorInfoCard() {
       <div className="max-w-6xl mx-auto">
         <div
           ref={cardRef}
-          className={`bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-700 cursor-pointer transform-gpu hover:shadow-xl hover:scale-102 hover:-translate-y-2 hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20 dark:text-gray-100 dark:shadow-gray-700/20 ${animationClass}`}
+          className={`bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-md overflow-hidden transition-all duration-700 cursor-pointer transform-gpu hover:shadow-xl hover:scale-102 hover:-translate-y-2 hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20 dark:text-gray-100 dark:shadow-gray-700/20 ${animationClass}`}
         >
           <div className="p-6 sm:p-8 md:p-12 lg:p-16">
             <h1 className="text-4xl sm:text-5xl font-bold text-center mb-8 text-gray-900 dark:text-white leading-tight">

@@ -15,6 +15,9 @@ export default function Navbar() {
     const stored = localStorage.getItem('darkMode');
     if (stored !== null) {
       setDarkMode(stored === 'true');
+    } else {
+      setDarkMode(true); // 預設深色模式
+      localStorage.setItem('darkMode', 'true');
     }
   }, []);
 
