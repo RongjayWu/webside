@@ -4,9 +4,9 @@ import Skills from '../components/Skills';
 import Portfolio from '../components/Portfolio';
 import BlogList from '../components/BlogList';
 import Contact from '../components/Contact';
-import Background from '../components/Background';
 import Navbar from '../components/Navbar';
 import ScrollToTopButton from "../components/ScrollToTopButton";
+import OceanBackground from '../components/OceanBackground';
 import { GetStaticProps } from 'next';
 import fs from 'fs';
 import path from 'path';
@@ -25,7 +25,7 @@ interface HomeProps {
 export default function Home({ posts }: HomeProps) {
   return (
     <div className="relative overflow-hidden">
-      <Background />
+      {/* <Background /> */}
       <Navbar />
       <main className="relative z-10">
         <Hero />
@@ -34,6 +34,7 @@ export default function Home({ posts }: HomeProps) {
         <Portfolio />
         <BlogList posts={posts} />
         <Contact />
+        <OceanBackground />
       </main>
       <ScrollToTopButton />
     </div>

@@ -5,47 +5,95 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative h-[80vh] flex justify-center items-start pt-32 px-4
-                 bg-gradient-to-r from-blue-500 to-purple-600
-                 dark:from-blue-800 dark:to-purple-900
-                 text-white dark:text-gray-100"
+      className="relative min-h-[80vh] flex justify-center items-start pt-16 md:pt-24 px-4"
     >
-      <div className="max-w-6xl w-full flex flex-col md:flex-row items-center md:items-start gap-8">
-        {/* 左半邊：文字 + 按鈕 */}
-        <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold">你好, 我是 吳榮傑</h1>
-          <p className="text-lg md:text-xl">
-            喜愛學習的程式設計師 | 高職資電類家教老師
-          </p>
-          <a
-            href="#contact"
-            className="px-5 py-2 md:px-6 md:py-3 bg-white text-blue-600 font-semibold rounded shadow
-                       hover:bg-gray-100 dark:bg-gray-700 dark:text-blue-400 dark:hover:bg-gray-600
-                       transition transform hover:scale-105"
-          >
-            現在聯繫
-          </a>
-        </div>
+      {/* 主要卡片容器 */}
+      <div className="max-w-5xl w-full mt-8 md:mt-12">
+        <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/30 overflow-hidden">
+          
+          {/* 卡片內容 */}
+          <div className="p-6 sm:p-8 md:p-12 lg:p-16">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
+              
+              {/* 左半邊：文字 + 按鈕 */}
+              <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left space-y-6">
+                <div className="space-y-4">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
+                    你好, 我是{' '}
+                    <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+                      吳榮傑
+                    </span>
+                  </h1>
+                  <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed">
+                    | 喜愛學習的程式設計師
+                  </p>
+                  <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed">
+                    | 高職資電類家教老師
+                  </p>
+                </div>
+                
+                {/* CTA 按鈕 */}
+                <a
+                  href="#contact"
+                  className="group relative inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 
+                           bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
+                           text-white font-semibold rounded-full shadow-lg hover:shadow-xl
+                           transform hover:scale-105 hover:-translate-y-1
+                           transition-all duration-300 ease-out
+                           dark:from-blue-500 dark:to-purple-500 dark:hover:from-blue-600 dark:hover:to-purple-600"
+                >
+                  <span className="relative z-10">現在聯繫</span>
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                  
+                  {/* 按鈕光效 */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
+                </a>
+              </div>
 
-        {/* 右半邊：大頭貼 */}
-        <div className="flex-1 flex justify-center md:justify-end mt-6 md:mt-0">
-          <div className="w-40 h-40 sm:w-52 sm:h-52 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-gray-300">
-            <Image
-              src="/hero.jpg"
-              alt="Hero Image"
-              width={288}
-              height={288}
-              className="object-cover w-full h-full"
-              priority
-            />
+              {/* 右半邊：大頭貼 */}
+              <div className="flex-1 flex justify-center md:justify-end">
+                <div className="relative group">
+                  {/* 背景裝飾圓環 */}
+                  <div className="absolute inset-0 w-44 h-44 sm:w-56 sm:h-56 md:w-80 md:h-80 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-500"></div>
+                  
+                  {/* 主要頭像容器 */}
+                  <div className="relative w-40 h-40 sm:w-52 sm:h-52 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-gray-200 group-hover:shadow-3xl group-hover:scale-105 transition-all duration-500">
+                    <Image
+                      src="/hero.jpg"
+                      alt="吳榮傑的個人照片"
+                      width={288}
+                      height={288}
+                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
+                      priority
+                    />
+                    
+                    {/* 頭像光效覆蓋層 */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </div>
+                  
+                  {/* 裝飾性光點 */}
+                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-blue-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -bottom-4 -left-2 w-3 h-3 bg-purple-400 rounded-full animate-pulse delay-1000"></div>
+                </div>
+              </div>
+            </div>
           </div>
+          
+          {/* 卡片底部裝飾線條 */}
+          <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500"></div>
         </div>
       </div>
 
       {/* 滾動提示箭頭 */}
       <a
         href="#about"
-        className="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 text-white dark:text-gray-200 animate-bounce transition-colors hover:text-blue-300 dark:hover:text-blue-400"
+        className="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 
+                   text-white/80 hover:text-white dark:text-gray-200 dark:hover:text-white
+                   animate-bounce transition-all duration-300
+                   p-2 rounded-full hover:bg-white/10 backdrop-blur-sm"
+        aria-label="向下滾動到關於我的部分"
       >
         <FiChevronDown className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
       </a>

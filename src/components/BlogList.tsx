@@ -40,7 +40,7 @@ export default function BlogList({ posts }: BlogListProps) {
   return (
     <section
       id="blog"
-      className="py-24 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4"
+      className="py-24 text-gray-900 dark:text-gray-100 px-4"
     >
       <h2 className="text-3xl font-bold mb-8 text-center">個人部落格</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -53,11 +53,12 @@ export default function BlogList({ posts }: BlogListProps) {
             }}
             data-index={i}
             className={`
-              block p-6 rounded-lg shadow-md transition-all duration-700
-              transform-gpu cursor-pointer
-              hover:scale-105 hover:shadow-xl
+            bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center text-center 
+              transition-all duration-700 cursor-pointer transform-gpu
+              hover:shadow-xl hover:scale-102 hover:-translate-y-2 
               hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50
-              dark:hover:from-blue-900/20 dark:hover:to-purple-900/20
+            dark:hover:from-blue-900/20 dark:hover:to-purple-900/20
+            dark:text-gray-100 dark:shadow-gray-700/20
               ${visibleIndexes[i] ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}
             `}
           >
