@@ -33,7 +33,7 @@ export default function Home({ posts }: HomeProps) {
         <Skills />
         <Portfolio />
         <BlogList posts={posts} />
-        <Contact />
+        <Contact tutorMode={false}/>
         <OceanBackground />
       </main>
       <ScrollToTopButton />

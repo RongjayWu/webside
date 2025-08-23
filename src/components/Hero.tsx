@@ -1,7 +1,11 @@
 import Image from 'next/image';
 import { FiChevronDown } from "react-icons/fi";
 
-export default function Hero() {
+interface HeroProps {
+  tutorMode?: boolean;
+}
+
+export default function Hero({ tutorMode = false }: HeroProps) {
   return (
     <section
       id="hero"
@@ -33,23 +37,59 @@ export default function Hero() {
                 </div>
                 
                 {/* CTA 按鈕 */}
-                <a
-                  href="#contact"
-                  className="group relative inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 
-                           bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
-                           text-white font-semibold rounded-full shadow-lg hover:shadow-xl
-                           transform hover:scale-105 hover:-translate-y-1
-                           transition-all duration-300 ease-out
-                           dark:from-blue-500 dark:to-purple-500 dark:hover:from-blue-600 dark:hover:to-purple-600"
-                >
-                  <span className="relative z-10">現在聯繫</span>
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                  
-                  {/* 按鈕光效 */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
-                </a>
+                <div className="flex flex-col sm:flex-row gap-4 w-full justify-center md:justify-start">
+                  <a
+                    href="#contact"
+                    className="group relative inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 
+                             bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
+                             text-white font-semibold rounded-full shadow-lg hover:shadow-xl
+                             transform hover:scale-105 hover:-translate-y-1
+                             transition-all duration-300 ease-out
+                             dark:from-blue-500 dark:to-purple-500 dark:hover:from-blue-600 dark:hover:to-purple-600"
+                  >
+                    <span className="relative z-10">現在聯繫</span>
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                    {/* 按鈕光效 */}
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
+                  </a>
+                  {tutorMode ? (
+                    <a
+                      href="/"
+                      className="group relative inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 
+                               bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700
+                               text-white font-semibold rounded-full shadow-lg hover:shadow-xl
+                               transform hover:scale-105 hover:-translate-y-1
+                               transition-all duration-300 ease-out
+                               dark:from-purple-500 dark:to-indigo-500 dark:hover:from-purple-600 dark:hover:to-indigo-600"
+                    >
+                      <span className="relative z-10">回首頁</span>
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                      {/* 按鈕光效 */}
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
+                    </a>
+                  ) : (
+                    <a
+                      href="/tutor"
+                      className="group relative inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 
+                               bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700
+                               text-white font-semibold rounded-full shadow-lg hover:shadow-xl
+                               transform hover:scale-105 hover:-translate-y-1
+                               transition-all duration-300 ease-out
+                               dark:from-purple-500 dark:to-indigo-500 dark:hover:from-purple-600 dark:hover:to-indigo-600"
+                    >
+                      <span className="relative z-10">家教服務</span>
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                      {/* 按鈕光效 */}
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
+                    </a>
+                  )}
+                </div>
               </div>
 
               {/* 右半邊：大頭貼 */}
@@ -89,7 +129,8 @@ export default function Hero() {
       {/* 滾動提示箭頭 */}
       <a
         href="#about"
-        className="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 
+        className="absolute bottom-4 md:bottom-6 center -translate-x-1/2
+                   w-fit flex justify-center items-center
                    text-white/80 hover:text-white dark:text-gray-200 dark:hover:text-white
                    animate-bounce transition-all duration-300
                    p-2 rounded-full hover:bg-white/10 backdrop-blur-sm"

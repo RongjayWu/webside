@@ -1,6 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
-export default function Contact() {
+interface ContactProps {
+  tutorMode?: boolean;
+}
+
+export default function Contact({ tutorMode = false }: ContactProps) {
   const contactRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -21,6 +25,13 @@ export default function Contact() {
     return () => observer.disconnect();
   }, []);
 
+  // 依 tutorMode 顯示不同內容
+  const title = tutorMode ? "現在聯繫我" : "現在聯繫我";
+  const subtitle = tutorMode ? "歡迎預約家教課程或洽詢學習規劃！" : "讓我們開始合作吧！";
+  const description = tutorMode
+    ? "有家教需求或課程問題，歡迎隨時聯繫我，將依您的需求提供最合適的協助。"
+    : "有任何專案想法或合作機會嗎？歡迎隨時聯繫我，我很樂意與您討論。";
+
   return (
     <section
       id="contact"
@@ -28,9 +39,8 @@ export default function Contact() {
     >
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-12 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
-          現在聯繫我
+          {title}
         </h2>
-        
         <div
           ref={contactRef}
           className={`
@@ -49,17 +59,17 @@ export default function Contact() {
           <div className="space-y-6">
             <div className="mb-6">
               <h3 className="text-2xl font-semibold mb-4 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
-                讓我們開始合作吧！
+                {subtitle}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                有任何專案想法或合作機會嗎？歡迎隨時聯繫我，我很樂意與您討論。
+                {description}
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               {/* Email 按鈕 */}
               <a
-                href="mailto:example@email.com"
+                href="mailto:websidejay3977@gmail.com"
                 className="
                   inline-flex items-center px-6 py-3 
                   bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 
@@ -71,12 +81,12 @@ export default function Contact() {
                 <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                Send Email
+                Email
               </a>
 
               {/* 可選：添加其他聯繫方式 */}
               <a
-                href="tel:+1234567890"
+                href="tel:+886908314887"
                 className="
                   inline-flex items-center px-6 py-3 
                   bg-gray-900 hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-500 
@@ -88,7 +98,7 @@ export default function Contact() {
                 <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                Call Me
+                Call
               </a>
             </div>
 
