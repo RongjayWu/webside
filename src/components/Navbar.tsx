@@ -41,6 +41,13 @@ export default function Navbar() {
       ? "bg-gray-900 text-white hover:bg-gray-200"
       : "bg-white text-gray-900 hover:bg-gray-300");
 
+  // SSR 階段一律為 false，CSR 再判斷路徑
+  const [isTutorPage, setIsTutorPage] = useState(false);
+
+  useEffect(() => {
+    setIsTutorPage(window.location.pathname === '/tutor');
+  }, []);
+
   return (
     <nav
       className={`fixed w-full z-50 transition-transform duration-300 ${
@@ -55,42 +62,24 @@ export default function Navbar() {
 
         {/* 導覽連結：桌面版 */}
         <div className="hidden md:flex space-x-6 text-gray-700 dark:text-gray-200">
-          <a
-            href="#hero"
-            className="hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            首頁
-          </a>
-          <a
-            href="#about"
-            className="hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            關於我
-          </a>
-          <a
-            href="#skills"
-            className="hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            技能專區
-          </a>
-          <a
-            href="#portfolio"
-            className="hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            作品集
-          </a>
-          <a
-            href="#blog"
-            className="hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            個人部落格
-          </a>
-          <a
-            href="#contact"
-            className="hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            現在聯繫
-          </a>
+          {isTutorPage ? (
+            <>
+              <a href="#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
+              <a href="#tutor-info" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">家教服務資訊</a>
+              <a href="#Textbook" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">教材預覽專區</a>
+              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">現在聯繫</a>
+            </>
+          ) : (
+            <>
+              <a href="#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
+              <a href="#about" className="hover:text-blue-500 dark:hover:text-blue-400 transition">關於我</a>
+              <a href="#skills" className="hover:text-blue-500 dark:hover:text-blue-400 transition">技能專區</a>
+              <a href="#portfolio" className="hover:text-blue-500 dark:hover:text-blue-400 transition">作品集</a>
+              <a href="#blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
+              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">現在聯繫</a>
+              <a href="/tutor" className="hover:text-purple-500 dark:hover:text-purple-400 transition">家教服務</a>
+            </>
+          )}
         </div>
 
         {/* 按鈕區 */}
@@ -112,37 +101,24 @@ export default function Navbar() {
 
       {/* 手機選單 */}
       {mobileOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 px-4 py-2 space-y-2">
-          <a
-            href="#hero"
-            className="block hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            Home
-          </a>
-          <a
-            href="#about"
-            className="block hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            About
-          </a>
-          <a
-            href="#skills"
-            className="block hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            Skills
-          </a>
-          <a
-            href="#portfolio"
-            className="block hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            Portfolio
-          </a>
-          <a
-            href="#contact"
-            className="block hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
-            Contact
-          </a>
+        <div className="md:hidden bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 px-4 py-2 space-y-2 flex flex-col items-center">
+          {isTutorPage ? (
+            <>
+              <a href="#hero" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">簡介</a>
+              <a href="#tutor-info" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">家教服務資訊</a>
+              <a href="#Textbook" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">教材預覽專區</a>
+              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">現在聯繫</a>
+            </>
+          ) : (
+            <>
+              <a href="#hero" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">簡介</a>
+              <a href="#about" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">關於我</a>
+              <a href="#skills" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">技能專區</a>
+              <a href="#portfolio" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">作品集</a>
+              <a href="#blog" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
+              <a href="#contact" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">現在聯繫</a>
+            </>
+          )}
         </div>
       )}
     </nav>
