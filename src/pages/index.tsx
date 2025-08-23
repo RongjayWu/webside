@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Skills from '../components/Skills';
@@ -24,7 +25,12 @@ interface HomeProps {
 
 export default function Home({ posts }: HomeProps) {
   return (
-    <div className="relative overflow-hidden">
+    <>
+      <Head>
+        <title>Rongjay</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className="relative overflow-hidden">
       {/* <Background /> */}
       <Navbar />
       <main className="relative z-10">
@@ -38,6 +44,7 @@ export default function Home({ posts }: HomeProps) {
       </main>
       <ScrollToTopButton />
     </div>
+    </>
   );
 }
 
