@@ -37,7 +37,7 @@ export default function Hero({ tutorMode = false }: HeroProps) {
     >
       {/* 主要卡片容器 */}
   <div className="max-w-6xl mx-auto w-full mt-8 md:mt-12">
-        <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/30 overflow-hidden">
+  <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/30 overflow-hidden">
           
           {/* 卡片內容 */}
           <div className="p-6 sm:p-8 md:p-12 lg:p-16">

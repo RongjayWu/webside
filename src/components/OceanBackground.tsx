@@ -181,7 +181,7 @@ export default function OceanBackground() {
 
       {/* 海洋粒子效果 - 深海粒子變化 */}
       <div className="absolute inset-0">
-        {Array.from({ length: 150 }).map((_, i) => (
+        {Array.from({ length: 100 }).map((_, i) => (
           <div
             key={`particle-${i}`}
             className="absolute rounded-full animate-float-random transition-all duration-1000"

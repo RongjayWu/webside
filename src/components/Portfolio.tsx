@@ -41,7 +41,7 @@ export default function Portfolio() {
               ref={(el) => { projectRefs.current[i] = el!; }}
               data-index={i}
               className={`
-                bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden
+                bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-md overflow-hidden
                 transition-all duration-700 cursor-pointer transform-gpu
                 hover:shadow-xl hover:scale-102 hover:-translate-y-2 
                 hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50
@@ -56,7 +56,7 @@ export default function Portfolio() {
                 transitionDelay: `${i * 150}ms` // 交錯動畫效果
               }}
             >
-              <div className="flex flex-col sm:flex-row h-full">
+                <div className="flex flex-col sm:flex-row h-full bg-white/80 dark:bg-gray-800/80">
                 {/* 左方20%區域 - 圖片 */}
                 <div className="sm:w-1/5 w-full h-48 sm:h-auto">
                   <img 

@@ -54,7 +54,7 @@ export default function BlogList({ posts }: BlogListProps) {
             }}
             data-index={i}
             className={`
-            bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center text-center mx-auto
+            bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-md p-6 flex flex-col items-center text-center mx-auto
               transition-all duration-700 cursor-pointer transform-gpu
               hover:shadow-xl hover:scale-102 hover:-translate-y-2 
               hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50

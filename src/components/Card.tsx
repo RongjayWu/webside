@@ -11,12 +11,11 @@ export default function Card({ title, description, link }: CardProps) {
       target="_blank"
       rel="noopener noreferrer"
       className="
-        block rounded-lg shadow-md bg-white dark:bg-gray-800 p-6 
+        block rounded-lg shadow-md bg-white/80 dark:bg-gray-800/80 p-6 
         transition-all duration-700 cursor-pointer transform-gpu
         hover:shadow-xl hover:scale-102 hover:-translate-y-2 
         hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50
-        dark:hover:from-blue-900/20 dark:hover:to-purple-900/20
-        dark:text-gray-100 dark:shadow-gray-700/20
+        dark:hover:from-blue-900/20 dark:hover:to-purple-900/20 dark:shadow-gray-700/20
         text-gray-900 dark:text-gray-100
         no-underline
       "
