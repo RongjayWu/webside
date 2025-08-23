@@ -9,10 +9,23 @@ export default function Navbar() {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  // 暗色模式
+  // 深色模式初始化與切換
   useEffect(() => {
-    if (darkMode) document.documentElement.classList.add("dark");
-    else document.documentElement.classList.remove("dark");
+    // 初始化：讀取 localStorage
+    const stored = localStorage.getItem('darkMode');
+    if (stored !== null) {
+      setDarkMode(stored === 'true');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem('darkMode', 'false');
+    }
   }, [darkMode]);
 
   // 滾動顯示/隱藏
@@ -67,7 +80,7 @@ export default function Navbar() {
               <a href="#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
               <a href="#tutor-info" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">家教服務資訊</a>
               <a href="#Textbook" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">教材預覽專區</a>
-              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">現在聯繫</a>
+              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
             </>
           ) : (
             <>
@@ -76,8 +89,7 @@ export default function Navbar() {
               <a href="#skills" className="hover:text-blue-500 dark:hover:text-blue-400 transition">技能專區</a>
               <a href="#portfolio" className="hover:text-blue-500 dark:hover:text-blue-400 transition">作品集</a>
               <a href="#blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
-              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">現在聯繫</a>
-              <a href="/tutor" className="hover:text-purple-500 dark:hover:text-purple-400 transition">家教服務</a>
+              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
             </>
           )}
         </div>
@@ -107,7 +119,7 @@ export default function Navbar() {
               <a href="#hero" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">簡介</a>
               <a href="#tutor-info" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">家教服務資訊</a>
               <a href="#Textbook" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">教材預覽專區</a>
-              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">現在聯繫</a>
+              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
             </>
           ) : (
             <>
@@ -116,7 +128,7 @@ export default function Navbar() {
               <a href="#skills" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">技能專區</a>
               <a href="#portfolio" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">作品集</a>
               <a href="#blog" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
-              <a href="#contact" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">現在聯繫</a>
+              <a href="#contact" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
             </>
           )}
         </div>

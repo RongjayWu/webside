@@ -1,106 +1,33 @@
-# 個人網站 & 部落格
+# Next.js 個人網站 & 部落格
 
-一個使用 Next.js 建立的單頁式個人網站和部落格。
+本專案為 Next.js + TypeScript 打造的單頁式個人網站與部落格，支援響應式設計、深色模式、動畫互動、家教服務頁面等多項功能。
 
-- **專案目標：建立一個 單頁式個人網站，包含：**
+## 主要功能
 
-  - 首頁介紹 (Hero)
+- 首頁 Hero：打字動畫名人語錄、粒子動態背景、釣魚鉤子滾動提示
+- 關於我 About：個人簡介、經歷
+- 技能 Skills：分類卡片、橫向技能列、互動 hover 效果
+- 作品集 Portfolio：卡片式專案展示、技術標籤
+- 部落格 Blog：Markdown 文章自動渲染
+- 聯絡我 Contact：表單、社群連結
+- 家教 Tutor：獨立家教服務頁，內容獨立、滾動提示自動切換
+- 全站寬度統一（max-w-6xl）、響應式設計
+- 深色模式自動記憶（localStorage）
+- 互動式動畫（framer-motion, tsparticles）
+- 釣魚鉤子 SVG 滾動提示
+- 頁腳可自訂顯示版本號（支援 .env.local 設定，預設已取消）
 
-  - 關於我 (About)
+## 特色亮點
 
-  - 技能展示 (Skills)
-
-  - 作品集 (Portfolio)
-
-  - 部落格 (Blog)
-
-  - 聯絡我 (Contact)
-
-- **支援 Markdown 發文、作品集 JSON 動態渲染、TailwindCSS 美化、響應式設計、動畫效果**
-
-## 功能特色
-
-- **首頁 / Hero**
-  - 動態背景（粒子動畫）
-  - 姓名、Tagline、CTA 按鈕
-- **關於我 (About)**
-  - 個人簡介、照片
-  - Timeline / 經歷展示
-- **技能 (Skills)**
-  - 技能圖示 / 進度條 / 雷達圖
-  - 分組顯示前端、後端、工具等
-- **作品集 (Portfolio)**
-  - 卡片式專案展示
-  - 圖片、標題、技術標籤、外部連結
-- **部落格 (Blog)**
-  - 最新文章卡片列表
-  - Markdown 支援
-- **聯絡我 (Contact)**
-  - Email、LinkedIn、GitHub
-  - 簡單表單收集訊息
-- **響應式設計**
-  - 適用手機、平板、桌面
-- **動畫效果**
-  - 卡片 hover、滑動進場動畫、動態背景
-
----
-
-## 專案結構
-
-```
-my-blog/
-├── content/blog/           # Markdown 部落格文章
-├── src/
-│   ├── components/         # 共用元件
-│   │   ├── Card.tsx
-│   │   ├── Background.tsx
-│   │   ├── Header.tsx
-│   │   ├── Hero.tsx
-│   │   ├── About.tsx
-│   │   ├── Skills.tsx
-│   │   ├── Portfolio.tsx
-│   │   ├── BlogList.tsx
-│   │   └── Contact.tsx
-│   ├── data/               # JSON 資料來源
-│   │   ├── portfolio.json
-│   │   └── skills.json
-│   ├── pages/              # Next.js 頁面
-│   │   ├── _app.tsx
-│   │   ├── index.tsx       # 首頁 (單頁式)
-│   │   └── blog/[slug].tsx # Markdown 文章頁
-│   └── styles/
-│       └── globals.css     # TailwindCSS 全局樣式
-├── package.json            # 專案依賴與腳本
-├── tailwind.config.js      # Tailwind CSS 設定
-├── tsconfig.json           # TypeScript 設定
-└── README.md               # 專案說明文件
-```
-
-## 安裝與啟動
-
-1. 安裝依賴套件：
-
-```bash
-npm install
-```
-
-2. 啟動開發模式：
-
-```bash
-npm run dev
-```
-
-3. 建置專案：
-
-```
-npm run build
-```
-
-4. 開啟瀏覽器並訪問：
-
-```arduino
-http://localhost:3000
-```
+- 全站寬度統一，視覺一致
+- 深色模式切換並自動記憶
+- Hero 區塊名言打字動畫（Bill Gates）
+- 釣魚鉤子 SVG 滾動提示
+- Tutor 家教頁獨立內容與滾動行為
+- 技能分類卡片、橫向技能列、互動 hover
+- 作品集/部落格/技能皆檔案驅動，無後端 API
+- 動畫與互動效果豐富
+- 版本號可自訂（.env.local），預設不顯示
 
 ## 技術棧
 
@@ -116,50 +43,116 @@ http://localhost:3000
 
 - 部署：Vercel
 
-## 部落格文章新增方式
+## 功能特色
 
-1. 在 content/blog/ 新增 .md 檔
+- 首頁 Hero：名人語錄打字動畫、粒子動態背景、釣魚鉤子 SVG 滾動提示
 
-2. 使用 frontmatter 設定：
+- 關於我 About：個人簡介、照片、經歷 Timeline
 
-   ```markdown
-   ---
-   title: "文章標題"
-   excerpt: "文章摘要"
-   ---
+- 技能 Skills：分類卡片、橫向技能列、互動 hover 效果
 
-   文章內容
-   ```
+- 作品集 Portfolio：卡片式專案展示、技術標籤、外部連結
 
-3. 文章會自動出現在首頁 Blog 區塊
+- 部落格 Blog：Markdown 文章自動渲染、卡片列表
 
-## 作品集新增方式
+- 聯絡我 Contact：Email、LinkedIn、GitHub、表單收集
 
-1. 在 src/data/portfolio.json （或你設置的資料檔）新增專案：
+- 家教 Tutor：獨立家教服務頁，滾動提示自動切換
 
-```json
-{
-  "title": "專案名稱",
-  "description": "專案描述",
-  "image": "/images/project.png",
-  "link": "https://github.com/username/project"
-}
+- 全站寬度統一（max-w-6xl）、響應式設計
+
+- 深色模式自動記憶（localStorage）
+
+- 互動式動畫（framer-motion, tsparticles）
+
+- 所有資料皆檔案驅動（無後端 API）
+
+---
+
+## 專案結構
+
+```
+webside/
+├── content/
+│   └── blog/                # Markdown 部落格文章
+├── public/                  # 靜態資源（圖片等）
+├── src/
+│   ├── components/          # 共用元件
+│   │   ├── About.tsx
+│   │   ├── Background.tsx
+│   │   ├── BlogCard.tsx
+│   │   ├── BlogList.tsx
+│   │   ├── Card.tsx
+│   │   ├── Contact.tsx
+│   │   ├── Hero.tsx
+│   │   ├── Navbar.tsx
+│   │   ├── OceanBackground.tsx
+│   │   ├── Portfolio.tsx
+│   │   ├── ScrollToTopButton.tsx
+│   │   ├── Skills.tsx
+│   │   ├── tutor.tsx
+│   │   ├── Textbook.tsx
+│   │   ├── VersionFooter.tsx
+│   ├── data/
+│   │   ├── portfolio.json
+│   │   ├── skills.json
+│   │   ├── portfolio.tsx
+│   │   ├── skills.tsx
+│   ├── lib/
+│   │   └── getPosts.ts
+│   ├── pages/
+│   │   ├── _app.tsx
+│   │   ├── index.tsx
+│   │   ├── tutor.tsx
+│   │   └── blog/[slug].tsx
+│   └── styles/
+│       └── globals.css
+├── package.json
+├── tailwind.config.js
+├── tsconfig.json
+├── postcss.config.js
+├── next.config.js
+└── README.md
 ```
 
-2. Portfolio 區塊會自動渲染卡片
+## 安裝與啟動教學
 
-## 技能新增方式
+### 1. 環境需求
 
-1. 在 src/data/skills.json（或你設置的資料檔）新增技能：
+- Node.js 18 以上（建議使用 LTS 版本）
+- npm 9 以上
 
-```json
-{
-  "category": "前端",
-  "skills": [
-    { "name": "React", "level": 90 },
-    { "name": "TypeScript", "level": 85 }
-  ]
-}
+### 2. 安裝依賴
+
+```bash
+npm install
 ```
 
-2. Skills 區塊會自動更新
+### 3. 啟動開發伺服器
+
+```bash
+npm run dev
+```
+
+預設網址：http://localhost:3000
+
+### 4. 建置正式版
+
+```bash
+npm run build
+npm start
+```
+
+### 5. 環境變數（選用）
+
+如需顯示版本號，可於根目錄新增 `.env.local`：
+
+```
+NEXT_PUBLIC_VERSION=1.0.0
+```
+
+### 6. 常見問題
+
+- 若安裝失敗，請確認 Node.js 版本
+- 若無法啟動，請檢查 `package.json` scripts 與依賴
+- TailwindCSS 樣式未生效，請確認 `globals.css` 已正確引入

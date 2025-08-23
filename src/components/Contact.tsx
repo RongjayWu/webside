@@ -26,7 +26,7 @@ export default function Contact({ tutorMode = false }: ContactProps) {
   }, []);
 
   // 依 tutorMode 顯示不同內容
-  const title = tutorMode ? "現在聯繫我" : "現在聯繫我";
+  const title = tutorMode ? "聯繫我" : "聯繫我";
   const subtitle = tutorMode ? "歡迎預約家教課程或洽詢學習規劃！" : "讓我們開始合作吧！";
   const description = tutorMode
     ? "有家教需求或課程問題，歡迎隨時聯繫我，將依您的需求提供最合適的協助。"
@@ -37,7 +37,7 @@ export default function Contact({ tutorMode = false }: ContactProps) {
       id="contact"
       className="py-24 text-gray-900 dark:text-gray-100 px-4"
     >
-      <div className="max-w-4xl mx-auto text-center">
+      <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-12 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
           {title}
         </h2>
