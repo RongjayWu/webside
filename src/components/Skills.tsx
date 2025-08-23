@@ -1,29 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { FaReact, FaNodeJs, FaDatabase, FaGitAlt, FaHtml5, FaCss3Alt, FaJsSquare, FaPython } from 'react-icons/fa';
-
-interface Skill {
-  name: string;
-  level: string;
-  percent: number; // 熟練度百分比
-  icon: JSX.Element;
-}
-
-const skills = {
-  frontend: [
-    { name: 'React', level: '熟練', percent: 90, icon: <FaReact size={32} className="text-blue-500" /> },
-    { name: 'HTML5', level: '熟練', percent: 95, icon: <FaHtml5 size={32} className="text-orange-500" /> },
-    { name: 'CSS3', level: '熟練', percent: 90, icon: <FaCss3Alt size={32} className="text-blue-600" /> },
-    { name: 'JavaScript', level: '熟練', percent: 90, icon: <FaJsSquare size={32} className="text-yellow-400" /> },
-  ],
-  backend: [
-    { name: 'Node.js', level: '熟練', percent: 85, icon: <FaNodeJs size={32} className="text-green-600" /> },
-    { name: 'Python', level: '中等', percent: 75, icon: <FaPython size={32} className="text-yellow-500" /> },
-    { name: 'Database', level: '中等', percent: 70, icon: <FaDatabase size={32} className="text-gray-600" /> },
-  ],
-  tools: [
-    { name: 'Git', level: '熟練', percent: 90, icon: <FaGitAlt size={32} className="text-red-500" /> },
-  ],
-};
+import { skills } from "../data/skills";
 
 export default function Skills() {
   const skillRefs = useRef<HTMLDivElement[]>([]); // 儲存每個卡片的 ref
@@ -61,7 +37,7 @@ export default function Skills() {
   }, []);
 
   return (
-    <section id="skills" className="py-24 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4">
+    <section id="skills" className="py-24 text-gray-900 dark:text-gray-100 px-4">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
           技能專區

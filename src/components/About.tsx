@@ -29,18 +29,19 @@ export default function About() {
   return (
     <section
       id="about"
-      className="py-24 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4"
+      className="py-24 text-gray-900 dark:text-gray-100 px-4"
     >
       <div className="max-w-4xl mx-auto text-center">
         <div
           ref={(el) => { cardRefs.current[0] = el!; }}
           data-index={0}
           className={`
-            p-6 rounded-lg shadow-md transition-all duration-700 cursor-pointer
+          bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center text-center 
+            transition-all duration-700 cursor-pointer transform-gpu
             hover:shadow-xl hover:scale-102 hover:-translate-y-2 
             hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50
-            dark:hover:from-blue-900/20 dark:hover:to-purple-900/20
-            transform-gpu
+          dark:hover:from-blue-900/20 dark:hover:to-purple-900/20
+          dark:text-gray-100 dark:shadow-gray-700/20
             ${visibleIndexes[0] ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}
           `}
         >
