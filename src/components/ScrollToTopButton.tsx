@@ -1,7 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FiArrowUp } from "react-icons/fi";
+// 釣魚鉤子 SVG
+function FishingHookIcon({ size = 24, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2v12a4 4 0 1 0 4 4" />
+      <circle cx="12" cy="2" r="1.5" />
+      <path d="M12 18c0 2 2 2 2 0" />
+    </svg>
+  );
+}
 
 export default function ScrollToTopButton() {
   const [visible, setVisible] = useState(false);
@@ -29,7 +38,7 @@ export default function ScrollToTopButton() {
                   ${visible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       aria-label="Scroll to top"
     >
-      <FiArrowUp size={24} />
+  <FishingHookIcon size={24} />
     </button>
   );
 }

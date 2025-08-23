@@ -177,31 +177,7 @@ export default function OceanBackground() {
         ))}
       </div>
 
-      {/* 海流波浪效果 - 深海變慢變暗 */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div 
-          className="absolute w-[200%] h-32 transition-opacity duration-700"
-          style={{
-            top: '20%',
-            left: '-50%',
-            opacity: 0.2 * (1 - scrollDepth * 0.6),
-            background: 'repeating-linear-gradient(90deg, transparent, rgba(255,255,255,0.1) 50px, transparent 100px)',
-            transform: `translateX(${mousePosition.x * 0.5}px) rotate(5deg)`,
-            animation: `wave-flow ${20 + scrollDepth * 10}s linear infinite`,
-          }}
-        />
-        <div 
-          className="absolute w-[200%] h-24 transition-opacity duration-700"
-          style={{
-            top: '60%',
-            left: '-50%',
-            opacity: 0.15 * (1 - scrollDepth * 0.7),
-            background: 'repeating-linear-gradient(90deg, transparent, rgba(255,255,255,0.08) 30px, transparent 60px)',
-            transform: `translateX(${-mousePosition.x * 0.3}px) rotate(-3deg)`,
-            animation: `wave-flow ${15 + scrollDepth * 8}s linear infinite reverse`,
-          }}
-        />
-      </div>
+      {/* 海流波浪效果 - 深海變慢變暗 - 已刪除 */}
 
       {/* 海洋粒子效果 - 深海粒子變化 */}
       <div className="absolute inset-0">

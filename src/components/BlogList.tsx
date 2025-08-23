@@ -42,9 +42,10 @@ export default function BlogList({ posts }: BlogListProps) {
       id="blog"
       className="py-24 text-gray-900 dark:text-gray-100 px-4"
     >
-      <h2 className="text-3xl font-bold mb-8 text-center">個人部落格</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {posts.map((post, i) => (
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold mb-8 text-center">個人部落格</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+          {posts.map((post, i) => (
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}
@@ -53,7 +54,7 @@ export default function BlogList({ posts }: BlogListProps) {
             }}
             data-index={i}
             className={`
-            bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center text-center 
+            bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center text-center mx-auto
               transition-all duration-700 cursor-pointer transform-gpu
               hover:shadow-xl hover:scale-102 hover:-translate-y-2 
               hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50
@@ -70,6 +71,7 @@ export default function BlogList({ posts }: BlogListProps) {
             </p>
           </Link>
         ))}
+        </div>
       </div>
     </section>
   );

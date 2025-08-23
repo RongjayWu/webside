@@ -1,5 +1,29 @@
+
 import Image from 'next/image';
 import { FiChevronDown } from "react-icons/fi";
+import { useEffect, useState } from "react";
+
+const quote = "Software is a great combination of artistry and engineering. – Bill Gates";
+
+interface TypingTextProps {
+  text: string;
+  speed?: number;
+}
+
+function TypingText({ text, speed = 60 }: TypingTextProps) {
+  const [display, setDisplay] = useState("");
+  useEffect(() => {
+    let i = 0;
+    setDisplay("");
+    const timer = setInterval(() => {
+      setDisplay((prev) => (i < text.length ? prev + text[i] : prev));
+      i++;
+      if (i >= text.length) clearInterval(timer);
+    }, speed);
+    return () => clearInterval(timer);
+  }, [text, speed]);
+  return <span>{display}</span>;
+}
 
 interface HeroProps {
   tutorMode?: boolean;
@@ -12,7 +36,7 @@ export default function Hero({ tutorMode = false }: HeroProps) {
       className="relative min-h-[80vh] flex justify-center items-start pt-16 md:pt-24 px-4"
     >
       {/* 主要卡片容器 */}
-      <div className="max-w-5xl w-full mt-8 md:mt-12">
+  <div className="max-w-6xl mx-auto w-full mt-8 md:mt-12">
         <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/30 overflow-hidden">
           
           {/* 卡片內容 */}
@@ -23,7 +47,7 @@ export default function Hero({ tutorMode = false }: HeroProps) {
               <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left space-y-6">
                 <div className="space-y-4">
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
-                    你好, 我是{' '}
+                    你好, 我是{" "}<br />
                     <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
                       吳榮傑
                     </span>
@@ -34,6 +58,9 @@ export default function Hero({ tutorMode = false }: HeroProps) {
                   <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed">
                     | 高職資電類家教老師
                   </p>
+                  <div className="mt-6 text-indigo-700 dark:text-indigo-400 text-base md:text-lg font-medium min-h-[2.5em]">
+                    <TypingText text={quote} speed={60} />
+                  </div>
                 </div>
                 
                 {/* CTA 按鈕 */}
@@ -128,13 +155,13 @@ export default function Hero({ tutorMode = false }: HeroProps) {
 
       {/* 滾動提示箭頭 */}
       <a
-        href="#about"
+        href={tutorMode ? "#tutor-info" : "#about"}
         className="absolute bottom-4 md:bottom-6 center -translate-x-1/2
                    w-fit flex justify-center items-center
                    text-white/80 hover:text-white dark:text-gray-200 dark:hover:text-white
                    animate-bounce transition-all duration-300
                    p-2 rounded-full hover:bg-white/10 backdrop-blur-sm"
-        aria-label="向下滾動到關於我的部分"
+        aria-label={tutorMode ? "向下滾動到家教服務資訊" : "向下滾動到關於我的部分"}
       >
         <FiChevronDown className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
       </a>
