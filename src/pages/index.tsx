@@ -27,10 +27,10 @@ export default function Home({ posts }: HomeProps) {
   return (
     <>
       <Head>
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
         <title>Rongjay</title>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
       </Head>
       <div className="relative overflow-hidden">
       {/* <Background /> */}
