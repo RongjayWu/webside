@@ -59,9 +59,11 @@ export default function Navbar() {
 
   // SSR 階段一律為 false，CSR 再判斷路徑
   const [isTutorPage, setIsTutorPage] = useState(false);
+  const [isBlogPage, setIsBlogPage] = useState(false);
 
   useEffect(() => {
     setIsTutorPage(window.location.pathname === '/tutor');
+    setIsBlogPage(window.location.pathname === '/blog');
   }, []);
 
   return (
@@ -78,7 +80,24 @@ export default function Navbar() {
 
         {/* 導覽連結：桌面版 */}
         <div className="hidden md:flex space-x-6 text-gray-700 dark:text-gray-200">
-          {isTutorPage ? (
+          {isBlogPage ? (
+            <>
+              <a href="#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
+              <a href="#db-blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
+              {/* 分類檢索下拉選單 */}
+              <div className="relative group">
+                <button className="hover:text-blue-500 dark:hover:text-blue-400 transition ">分類檢索</button>
+                <div className="absolute left-0 mt-2 w-40 bg-white dark:bg-gray-900 rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity z-10">
+                  <ul className="py-2">
+                    {/* TODO: 這裡可串接分類資料，暫時靜態範例 */}
+                    <li><a href="#category-1" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類一</a></li>
+                    <li><a href="#category-2" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類二</a></li>
+                    <li><a href="#category-3" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類三</a></li>
+                  </ul>
+                </div>
+              </div>
+            </>
+          ) : isTutorPage ? (
             <>
               <a href="#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
               <a href="#tutor-info" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">家教服務資訊</a>
@@ -91,7 +110,6 @@ export default function Navbar() {
               <a href="#about" className="hover:text-blue-500 dark:hover:text-blue-400 transition">關於我</a>
               <a href="#skills" className="hover:text-blue-500 dark:hover:text-blue-400 transition">技能專區</a>
               <a href="#portfolio" className="hover:text-blue-500 dark:hover:text-blue-400 transition">作品集</a>
-              <a href="#blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
               <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
             </>
           )}
@@ -103,6 +121,11 @@ export default function Navbar() {
           <button onClick={() => setDarkMode(!darkMode)} className={buttonClass}>
             {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
           </button>
+
+          {/* 部落格分頁顯示管理員登入按鈕 */}
+          {isBlogPage && (
+            <a href="#" className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow hover:scale-105 transition-all">管理員登入</a>
+          )}
 
           {/* 漢堡選單：小螢幕 */}
           <button
@@ -117,7 +140,24 @@ export default function Navbar() {
       {/* 手機選單 */}
       {mobileOpen && (
         <div className="md:hidden bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 px-4 py-2 space-y-2 flex flex-col items-center">
-          {isTutorPage ? (
+          {isBlogPage ? (
+            <>
+              <a href="#hero" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
+              <a href="#db-blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
+              {/* 分類檢索下拉選單（手機版） */}
+              <div className="relative w-full it">
+                <button className="hover:text-blue-500 dark:hover:text-blue-400 transition ">分類檢索</button>
+                <div className="absolute left-0 mt-2 w-full bg-white dark:bg-gray-900 rounded shadow-lg z-10">
+                  <ul className="py-2">
+                    {/* TODO: 這裡可串接分類資料，暫時靜態範例 */}
+                    <li><a href="#category-1" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類一</a></li>
+                    <li><a href="#category-2" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類二</a></li>
+                    <li><a href="#category-3" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類三</a></li>
+                  </ul>
+                </div>
+              </div>
+            </>
+          ) : isTutorPage ? (
             <>
               <a href="#hero" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">簡介</a>
               <a href="#tutor-info" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">家教服務資訊</a>
@@ -130,7 +170,6 @@ export default function Navbar() {
               <a href="#about" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">關於我</a>
               <a href="#skills" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">技能專區</a>
               <a href="#portfolio" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">作品集</a>
-              <a href="#blog" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
               <a href="#contact" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
             </>
           )}

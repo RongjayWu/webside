@@ -1,0 +1,26 @@
+// Prisma schema for blog post and category relation
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[]
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String
+  createdAt  DateTime @default(now())
+  author     String
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+}
