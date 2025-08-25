@@ -5,7 +5,7 @@ import Skills from '../components/Skills';
 import Club from '../components/Club';
 import Experience from '../components/Experience';
 import Portfolio from '../components/Portfolio';
-import BlogList from '../components/BlogList';
+import DbBlogList from '../components/DbBlogList';
 import Contact from '../components/Contact';
 import Navbar from '../components/Navbar';
 import ScrollToTopButton from "../components/ScrollToTopButton";
@@ -39,12 +39,11 @@ export default function Home({ posts }: HomeProps) {
       <Navbar />
       <main className="relative z-10">
         <Hero />
-  <About />
-  <Experience />
-  <Club />
-  <Skills />
+        <About />
+        <Experience />
+        <Club />
+        <Skills />
         <Portfolio />
-        <BlogList posts={posts} />
         <Contact tutorMode={false}/>
         <OceanBackground />
       </main>
