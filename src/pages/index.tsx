@@ -2,6 +2,8 @@ import Head from 'next/head';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Skills from '../components/Skills';
+import Club from '../components/Club';
+import Experience from '../components/Experience';
 import Portfolio from '../components/Portfolio';
 import BlogList from '../components/BlogList';
 import Contact from '../components/Contact';
@@ -37,8 +39,10 @@ export default function Home({ posts }: HomeProps) {
       <Navbar />
       <main className="relative z-10">
         <Hero />
-        <About />
-        <Skills />
+  <About />
+  <Experience />
+  <Club />
+  <Skills />
         <Portfolio />
         <BlogList posts={posts} />
         <Contact tutorMode={false}/>

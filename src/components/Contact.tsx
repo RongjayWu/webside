@@ -38,9 +38,6 @@ export default function Contact({ tutorMode = false }: ContactProps) {
       className="py-24 text-gray-900 dark:text-gray-100 px-4"
     >
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-12 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
-          {title}
-        </h2>
         <div
           ref={contactRef}
           className={`
@@ -56,6 +53,9 @@ export default function Contact({ tutorMode = false }: ContactProps) {
             }
           `}
         >
+          <h2 className="text-4xl font-bold mb-12 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
+            {title}
+          </h2>
           <div className="space-y-6">
             <div className="mb-6">
               <h3 className="text-2xl font-semibold mb-4 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
