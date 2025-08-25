@@ -31,7 +31,7 @@ export default function About() {
       id="about"
       className="py-24 text-gray-900 dark:text-gray-100 px-4"
     >
-  <div className="max-w-6xl mx-auto text-center">
+      <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-4 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
           關於我
         </h2>

@@ -133,3 +133,9 @@ html {
     transform: translateY(-50px);
   }
 }
+
+/* styles/globals.css */
+.text-outline {
+  -webkit-text-stroke: 2px #4f46e5; /* 藍色描邊 */
+  color: white;
+}
