@@ -32,9 +32,11 @@ interface HeroProps {
 export default function Hero({ tutorMode = false }: HeroProps) {
   // CSR 階段判斷分頁
   const [isBlogPage, setIsBlogPage] = useState(false);
+  const [isTutorPage, setIsTutorPage] = useState(false);
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsBlogPage(window.location.pathname === '/blog');
+      setIsTutorPage(window.location.pathname === '/tutor');
     }
   }, []);
 
@@ -70,22 +72,40 @@ export default function Hero({ tutorMode = false }: HeroProps) {
                 </div>
                 {/* CTA 按鈕：三顆按鈕，sm 以上水平排列，sm 以下豎向排列 */}
                 <div className="flex flex-col sm:flex-row gap-4 w-full justify-center items-center sm:items-start md:justify-start">
-                  {/* 家教服務按鈕 */}
-                  <a
-                    href="/tutor"
-                    className="group relative inline-flex items-center justify-center gap-2 w-48 h-12 md:w-56 md:h-14 px-0 py-0
-                             bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
-                             text-white font-semibold rounded-full shadow-lg hover:shadow-xl
-                             transform hover:scale-105 hover:-translate-y-1
-                             transition-all duration-300 ease-out
-                             dark:from-blue-500 dark:to-purple-500 dark:hover:from-blue-600 dark:hover:to-purple-600"
-                  >
-                    <span className="relative z-10">家教服務</span>
-                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
-                  </a>
+                  {/* 家教服務按鈕：家教頁面下顯示回首頁，其餘分頁顯示家教服務 */}
+                  {isTutorPage ? (
+                    <a
+                      href="/"
+                      className="group relative inline-flex items-center justify-center gap-2 w-48 h-12 md:w-56 md:h-14 px-0 py-0
+                               bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
+                               text-white font-semibold rounded-full shadow-lg hover:shadow-xl
+                               transform hover:scale-105 hover:-translate-y-1
+                               transition-all duration-300 ease-out
+                               dark:from-blue-500 dark:to-purple-500 dark:hover:from-blue-600 dark:hover:to-purple-600"
+                    >
+                      <span className="relative z-10">回首頁</span>
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
+                    </a>
+                  ) : (
+                    <a
+                      href="/tutor"
+                      className="group relative inline-flex items-center justify-center gap-2 w-48 h-12 md:w-56 md:h-14 px-0 py-0
+                               bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700
+                               text-white font-semibold rounded-full shadow-lg hover:shadow-xl
+                               transform hover:scale-105 hover:-translate-y-1
+                               transition-all duration-300 ease-out
+                               dark:from-blue-500 dark:to-purple-500 dark:hover:from-blue-600 dark:hover:to-purple-600"
+                    >
+                      <span className="relative z-10">家教服務</span>
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
+                    </a>
+                  )}
                   {/* 部落格分頁時：部落格按鈕改為回首頁，否則顯示部落格按鈕 */}
                   {isBlogPage ? (
                     <a
