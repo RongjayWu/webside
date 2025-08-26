@@ -1,7 +1,5 @@
-// Prisma schema for blog post and category relation
-
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
