@@ -11,17 +11,34 @@ interface DbPost {
 
 export default function DbBlogList() {
   const [posts, setPosts] = useState<DbPost[]>([]);
+  const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     fetch('/api/db-posts')
-      .then(res => res.json())
-      .then(setPosts);
+      .then(res => {
+        if (!res.ok) throw new Error('API 回應失敗: ' + res.status);
+        return res.json();
+      })
+      .then(data => {
+        console.log('API 回傳資料:', data);
+        setPosts(data);
+      })
+      .catch(err => {
+        setError(err.message);
+        console.error('API fetch 錯誤:', err);
+      });
   }, []);
 
   return (
     <section id="db-blog" className="py-24 text-gray-900 dark:text-gray-100 px-4">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold mb-8 text-center">個人部落格</h2>
+        {error && (
+          <div className="text-red-600 dark:text-red-400 text-center mb-6">API 錯誤：{error}</div>
+        )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+          {posts.length === 0 && !error && (
+            <div className="col-span-full text-gray-500 dark:text-gray-400 text-center">目前沒有文章資料。</div>
+          )}
           {posts.map(post => (
             <div
               key={post.id}

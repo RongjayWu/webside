@@ -10,8 +10,22 @@ import Contact from '../components/Contact';
 import Navbar from '../components/Navbar';
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import OceanBackground from '../components/OceanBackground';
+import { GetStaticProps } from 'next';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
 
-export default function Home() {
+interface Post {
+  slug: string;
+  title: string;
+  excerpt: string;
+}
+
+interface HomeProps {
+  posts: Post[];
+}
+
+export default function Home({ posts }: HomeProps) {
   return (
     <>
       <Head>
@@ -21,20 +35,20 @@ export default function Home() {
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </Head>
       <div className="relative overflow-hidden">
-        <Navbar />
-        <main className="relative z-10">
-          <Hero />
-          <About />
-          <Experience />
-          <Club />
-          <Skills />
-          <Portfolio />
-          <DbBlogList />
-          <Contact tutorMode={false}/>
-          <OceanBackground />
-        </main>
-        <ScrollToTopButton />
-      </div>
+      {/* <Background /> */}
+      <Navbar />
+      <main className="relative z-10">
+        <Hero />
+        <About />
+        <Experience />
+        <Club />
+        <Skills />
+        <Portfolio />
+        <Contact tutorMode={false}/>
+        <OceanBackground />
+      </main>
+      <ScrollToTopButton />
+    </div>
     </>
   );
 }
