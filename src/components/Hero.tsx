@@ -15,8 +15,7 @@ function TypingText({ text, speed = 60 }: TypingTextProps) {
     let i = 0;
     setDisplay("");
     const timer = setInterval(() => {
-      setDisplay((prev) => (i < text.length ? prev + text[i] : prev));
-      i++;
+      setDisplay((prev) => (i < text.length ? prev + text[i++] : prev));
       if (i >= text.length) clearInterval(timer);
     }, speed);
     return () => clearInterval(timer);
@@ -69,7 +68,7 @@ export default function Hero({ tutorMode = false }: HeroProps) {
                       | 高職資電類家教老師
                     </p>
                     <div className="mt-6 text-indigo-700 dark:text-indigo-400 text-sm sm:text-base md:text-lg xl:text-xl font-medium min-h-[2.5em] h-10 md:h-12 flex items-center">
-                      <TypingText text={quote} speed={40} />
+                      <TypingText text={quote} speed={60} />
                     </div>
                   </div>
                 </div>
