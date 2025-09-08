@@ -18,12 +18,12 @@ export const textbooks: Textbook[] = [
     description: "各類公式整理，快速掌握重點，解題技巧分享，提升解題能力。",
     url: "https://drive.google.com/file/d/1DwOgFPThmX3-kX3qvOpyrBLmLXlzlU3v/view?usp=drive_link"
   },
-  // {
-  //   subject: "程式設計",
-  //   title: "高職資電類程式設計",
-  //   description: "套用觀念，掌握解題能力，分析題型，理解考試重點與方向。",
-  //   url: "/textbooks/js-basic.pdf"
-  // },
+  {
+    subject: "程式設計",
+    title: "高職資電類程式設計",
+    description: "套用觀念，掌握解題能力，分析題型，理解考試重點與方向。",
+    url: "https://drive.google.com/file/d/1OjykRQE2i1ldju_szmsC4N7556SSmyDo/view?usp=drive_link"
+  },
   {
     subject: "數位邏輯",
     title: "高職資電類數位邏輯",
