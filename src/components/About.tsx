@@ -32,9 +32,7 @@ export default function About() {
       className="py-24 text-gray-900 dark:text-gray-100 px-4"
     >
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-4 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
-          關於我
-        </h2>
+        
         <div
           ref={(el) => { cardRefs.current[0] = el!; }}
           data-index={0}
@@ -48,6 +46,9 @@ export default function About() {
             ${visibleIndexes[0] ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}
           `}
         >
+          <h2 className="text-4xl font-bold mb-4 transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
+          關於我
+          </h2>
           <p className="text-lg leading-relaxed transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300">
             你好！我是吳榮傑，一位就讀於國立台灣科技大學資訊管理系四年級的學生。喜愛科技、創新以及軟體開發與專案管理，也為此累積了一定經驗。
           </p>

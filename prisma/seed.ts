@@ -2,6 +2,8 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  console.log('Seed start');
+
   // 建立分類
   let category = await prisma.category.findFirst({ where: { name: '技術分享' } });
   if (!category) {
@@ -27,6 +29,8 @@ async function main() {
       categoryId: category.id,
     },
   });
+
+  console.log('Seed done');
 }
 
 main()
