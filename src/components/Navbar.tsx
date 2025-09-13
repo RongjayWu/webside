@@ -3,7 +3,15 @@
 import { useState, useEffect } from "react";
 import { FiSun, FiMoon, FiMenu, FiX } from "react-icons/fi";
 
-export default function Navbar() {
+import { useRouter } from 'next/router';
+
+type NavbarProps = {
+  onAdminLoginClick?: () => void;
+};
+
+export default function Navbar({ onAdminLoginClick }: NavbarProps) {
+  const router = require('next/router').useRouter();
+  const [isAdminNewPost, setIsAdminNewPost] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
@@ -62,8 +70,11 @@ export default function Navbar() {
   const [isBlogPage, setIsBlogPage] = useState(false);
 
   useEffect(() => {
-    setIsTutorPage(window.location.pathname === '/tutor');
-    setIsBlogPage(window.location.pathname === '/blog');
+    if (typeof window !== 'undefined') {
+      setIsTutorPage(window.location.pathname === '/tutor');
+      setIsBlogPage(window.location.pathname === '/blog');
+      setIsAdminNewPost(window.location.pathname === '/admin/new-post');
+    }
   }, []);
 
   return (
@@ -80,7 +91,8 @@ export default function Navbar() {
 
         {/* 導覽連結：桌面版 */}
         <div className="hidden md:flex space-x-6 text-gray-700 dark:text-gray-200">
-          {isBlogPage ? (
+          {/* /admin/new-post 不顯示任何導覽連結 */}
+          {isAdminNewPost ? null : isBlogPage ? (
             <>
               <a href="#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
               <a href="#db-blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
@@ -116,29 +128,45 @@ export default function Navbar() {
         </div>
 
         {/* 按鈕區 */}
-        <div className="flex items-center space-x-4">
+  <div className="flex items-center space-x-4">
           {/* 暗色模式切換 */}
           <button onClick={() => setDarkMode(!darkMode)} className={buttonClass}>
             {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
           </button>
 
-          {/* 部落格分頁顯示管理員登入按鈕 */}
-          {isBlogPage && (
-            <a href="#" className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow hover:scale-105 transition-all">管理員登入</a>
+          {/* /admin/new-post 右側顯示登出按鈕，其他頁維持原本按鈕 */}
+          {isAdminNewPost ? (
+            <button
+              type="button"
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow hover:scale-105 transition-all"
+              onClick={() => router.push('/blog')}
+            >
+              登出
+            </button>
+          ) : isBlogPage && (
+            <button
+              type="button"
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow hover:scale-105 transition-all"
+              onClick={onAdminLoginClick}
+            >
+              管理員登入
+            </button>
           )}
 
-          {/* 漢堡選單：小螢幕 */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className={buttonClass + " md:hidden"}
-          >
-            {mobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-          </button>
+          {/* /admin/new-post 不顯示漢堡選單 */}
+          {!isAdminNewPost && (
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className={buttonClass + " md:hidden"}
+            >
+              {mobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            </button>
+          )}
         </div>
       </div>
 
-      {/* 手機選單 */}
-      {mobileOpen && (
+      {/* 手機選單：/admin/new-post 不顯示 */}
+      {!isAdminNewPost && mobileOpen && (
         <div className="md:hidden bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 px-4 py-2 space-y-2 flex flex-col items-center">
           {isBlogPage ? (
             <>
@@ -162,7 +190,7 @@ export default function Navbar() {
               <a href="#hero" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">簡介</a>
               <a href="#tutor-info" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">家教服務資訊</a>
               <a href="#Textbook" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">教材預覽專區</a>
-              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
+              <a href="#contact" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
             </>
           ) : (
             <>

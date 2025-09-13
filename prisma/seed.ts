@@ -30,6 +30,14 @@ async function main() {
     },
   });
 
+    await prisma.user.create({
+    data: {
+      username: 'rongjay',
+      password: 'rongjay1128', // 實務請用 bcrypt 雜湊
+      role: 'admin'
+    }
+  });
+
   console.log('Seed done');
 }
 

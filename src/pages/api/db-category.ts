@@ -4,7 +4,11 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+  if (req.method === 'GET') {
+    // 取得所有分類
+    const categories = await prisma.category.findMany({ orderBy: { id: 'asc' } });
+    res.status(200).json(categories);
+  } else if (req.method === 'POST') {
     // 新增類別
     const { name } = req.body;
     const category = await prisma.category.create({ data: { name } });
