@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { FiChevronDown } from "react-icons/fi";
+import { FaFacebookF, FaLine, FaInstagram, FaGithub, FaEnvelope, FaPhone } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import socialLinks from '../data/social-links.json';
 
 const quote = "Software is a great combination of artistry and engineering. – Bill Gates";
 
@@ -67,6 +69,72 @@ export default function Hero({ tutorMode = false }: HeroProps) {
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-600 dark:text-gray-300 leading-relaxed">
                       | 高職資電類家教老師
                     </p>
+                    
+                    {/* 社群媒體圖示 */}
+                    <div className="mt-4 flex justify-center md:justify-start items-center gap-3 sm:gap-4">
+                      {/* Facebook */}
+                      <a
+                        href={socialLinks.facebook}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative p-2 sm:p-2.5 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-600/30 hover:border-purple-600/50 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 transition-all duration-300 ease-out"
+                        aria-label="Facebook"
+                      >
+                        <FaFacebookF className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 group-hover:text-purple-600 dark:group-hover:text-purple-400" />
+                      </a>
+
+                      {/* LINE */}
+                      <a
+                        href={socialLinks.line}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative p-2 sm:p-2.5 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-600/30 hover:border-purple-600/50 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 transition-all duration-300 ease-out"
+                        aria-label="LINE"
+                      >
+                        <FaLine className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+                      </a>
+
+                      {/* Instagram */}
+                      <a
+                        href={socialLinks.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative p-2 sm:p-2.5 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-600/30 hover:border-purple-600/50 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 transition-all duration-300 ease-out"
+                        aria-label="Instagram"
+                      >
+                        <FaInstagram className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 dark:text-indigo-400 group-hover:text-purple-600 dark:group-hover:text-purple-400" />
+                      </a>
+
+                      {/* GitHub */}
+                      <a
+                        href={socialLinks.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative p-2 sm:p-2.5 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-600/30 hover:border-purple-600/50 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 transition-all duration-300 ease-out"
+                        aria-label="GitHub"
+                      >
+                        <FaGithub className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+                      </a>
+
+                      {/* Email */}
+                      <a
+                        href={socialLinks.email}
+                        className="group relative p-2 sm:p-2.5 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-600/30 hover:border-purple-600/50 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 transition-all duration-300 ease-out"
+                        aria-label="Email"
+                      >
+                        <FaEnvelope className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 group-hover:text-purple-600 dark:group-hover:text-purple-400" />
+                      </a>
+
+                      {/* Phone */}
+                      <a
+                        href={socialLinks.phone}
+                        className="group relative p-2 sm:p-2.5 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-600/30 hover:border-purple-600/50 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 transition-all duration-300 ease-out"
+                        aria-label="Phone"
+                      >
+                        <FaPhone className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+                      </a>
+                    </div>
+                    
                     <div className="mt-6 text-indigo-700 dark:text-indigo-400 text-sm sm:text-base md:text-lg xl:text-xl font-medium min-h-[2.5em] h-10 md:h-12 flex items-center">
                       <TypingText text={quote} speed={60} />
                     </div>

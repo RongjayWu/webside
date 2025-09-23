@@ -1,4 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
+import { FaFacebookF, FaLine, FaInstagram, FaGithub, FaEnvelope, FaPhone } from "react-icons/fa";
+import socialLinks from '../data/social-links.json';
 
 interface ContactProps {
   tutorMode?: boolean;
@@ -69,7 +71,7 @@ export default function Contact({ tutorMode = false }: ContactProps) {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               {/* Email 按鈕 */}
               <a
-                href="mailto:websidejay3977@gmail.com"
+                href={socialLinks.email}
                 className="
                   inline-flex items-center px-6 py-3 
                   bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 
@@ -78,44 +80,110 @@ export default function Contact({ tutorMode = false }: ContactProps) {
                   transform-gpu
                 "
               >
-                <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+                <FaEnvelope className="mr-2 w-5 h-5" />
                 Email
               </a>
 
-              {/* 可選：添加其他聯繫方式 */}
+              {/* 電話按鈕 */}
               <a
-                href="tel:+886908314887"
+                href={socialLinks.phone}
                 className="
                   inline-flex items-center px-6 py-3 
-                  bg-gray-900 hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-500 
+                  bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 
                   text-white rounded-lg shadow-md
                   transition-all duration-300 hover:scale-105 hover:shadow-lg
                   transform-gpu
                 "
               >
-                <svg className="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
+                <FaPhone className="mr-2 w-5 h-5" />
                 Call
               </a>
             </div>
 
+            {/* 社群媒體圖示按鈕 */}
+            <div className="mt-8 flex justify-center items-center gap-4 sm:gap-6">
+              <p className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-4 sm:mb-0">
+                或透過社群媒體聯繫：
+              </p>
+            </div>
+            
+            <div className="flex justify-center items-center gap-3 sm:gap-4">
+              {/* Facebook */}
+              <a
+                href={socialLinks.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-3 sm:p-4 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-600/30 hover:border-purple-600/50 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 transition-all duration-300 ease-out"
+                aria-label="Facebook"
+              >
+                <FaFacebookF className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400 group-hover:text-purple-600 dark:group-hover:text-purple-400" />
+              </a>
+
+              {/* LINE */}
+              <a
+                href={socialLinks.line}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-3 sm:p-4 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-600/30 hover:border-purple-600/50 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 transition-all duration-300 ease-out"
+                aria-label="LINE"
+              >
+                <FaLine className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+              </a>
+
+              {/* Instagram */}
+              <a
+                href={socialLinks.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-3 sm:p-4 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-600/30 hover:border-purple-600/50 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 transition-all duration-300 ease-out"
+                aria-label="Instagram"
+              >
+                <FaInstagram className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 dark:text-indigo-400 group-hover:text-purple-600 dark:group-hover:text-purple-400" />
+              </a>
+
+              {/* GitHub */}
+              <a
+                href={socialLinks.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-3 sm:p-4 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-600/30 hover:border-purple-600/50 backdrop-blur-sm shadow-sm hover:shadow-md transform hover:scale-110 transition-all duration-300 ease-out"
+                aria-label="GitHub"
+              >
+                <FaGithub className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+              </a>
+            </div>
+
             {/* 聯繫資訊 */}
-            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-400">
+            <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
+              {/* 主要聯絡資訊 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
                 <div className="flex items-center justify-center sm:justify-start">
-                  <svg className="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  websidejay3977@gmail.com
+                  <FaEnvelope className="mr-2 w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Email: websidejay3977@gmail.com</span>
                 </div>
                 <div className="flex items-center justify-center sm:justify-start">
-                  <svg className="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  +886 908 314 887
+                  <FaPhone className="mr-2 w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Phone: +886 908 314 887</span>
+                </div>
+              </div>
+              
+              {/* 社群媒體連結資訊 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-600 dark:text-gray-400">
+                <div className="flex items-center justify-center sm:justify-start">
+                  <FaFacebookF className="mr-2 w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Facebook: 吳榮傑</span>
+                </div>
+                <div className="flex items-center justify-center sm:justify-start">
+                  <FaLine className="mr-2 w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">LINE ID: pickup20031128</span>
+                </div>
+                <div className="flex items-center justify-center sm:justify-start">
+                  <FaInstagram className="mr-2 w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Instagram: @rongjay_1128</span>
+                </div>
+                <div className="flex items-center justify-center sm:justify-start">
+                  <FaGithub className="mr-2 w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">GitHub: RongjayWu</span>
                 </div>
               </div>
             </div>
