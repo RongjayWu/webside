@@ -60,8 +60,8 @@ export default function TutorInfoCard() {
               <h2 className="text-2xl font-semibold mb-4 transition-colors duration-300 text-blue-600 dark:text-blue-400 hover:text-purple-600 dark:hover:text-purple-400">家教期望薪資</h2>
               <h4 className="text-lg font-semibold mb-4 transition-colors duration-300 text-blue-600 dark:text-blue-400 hover:text-purple-600 dark:hover:text-purple-400">高職資電類專業科目家教</h4>
               <ul className="list-disc pl-6 space-y-2 text-lg text-gray-700 dark:text-gray-300">
-                <li>專業科目單科 500/hr</li>
-                <li>專業科目任兩科以上 600/hr</li>
+                <li>專業科目單科 600/hr</li>
+                <li>專業科目任兩科以上 700/hr</li>
                 <li>專業科目全科含實習 900/hr</li>
                 <li>周時數減免  達3小時-100/hr、達6小時-200/hr</li>
                 <li>其他特殊需求可私訊洽詢</li>
