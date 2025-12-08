@@ -174,6 +174,7 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
                   </div>
                 </div>
                 <a href="/#portfolio" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#portfolio'))}><FiGrid className="inline" />作品集</a>
+                {/* <a href="/blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1"><FiBookOpen className="inline" />迷航日誌</a> */}
                 <a href="/tutor" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={() => setMobileOpen(false)}><FiBookOpen className="inline" />家教資訊</a>
                 <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleContactClick)}><FiMail className="inline" />聯繫我</a>
               </>
