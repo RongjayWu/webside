@@ -165,7 +165,7 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
                 {/* 經歷分群下拉選單 */}
                 <div className="relative group">
                   <button className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 px-2 py-1 rounded group-hover:bg-blue-100/30 dark:group-hover:bg-gray-800/40">
-                    <FiBook className="inline" />經歷 <FiChevronDown className="inline ml-1" />
+                    <FiBook className="inline" />相關經歷 <FiChevronDown className="inline ml-1" />
                   </button>
                   <div className="absolute left-0 mt-2 min-w-[160px] bg-white dark:bg-gray-900 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 text-left">
                     <a href="/#experience" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#experience'))}><FiBriefcase />工作經歷</a>
