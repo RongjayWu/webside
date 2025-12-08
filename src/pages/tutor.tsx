@@ -5,18 +5,18 @@ import OceanBackground from '../components/OceanBackground';
 import TutorInfoCard from '../components/tutor';
 import TextbookPreview from '../components/Textbook';
 import Contact from '../components/Contact';
+import Footer from '../components/Footer';
 
 export default function Tutor() {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <Navbar />
-      {/* 保留 Hero，並覆蓋家教按鈕行為 */}
-        <OceanBackground />
+      <OceanBackground />
       <main className="relative z-10">
-        <Hero tutorMode={true} />
         <TutorInfoCard />
         <TextbookPreview />
         <Contact tutorMode={true} />
+        <Footer />
       </main>
       <ScrollToTopButton />
     </div>

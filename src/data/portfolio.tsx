@@ -1,8 +1,8 @@
 export const projects = [
   { 
-    title: '一站式個人網站(本站)', 
-    description: '一個使用 Next.js 建立的單頁式個人網站和部落格，具有響應式設計和現代化的用戶界面，用來存放各種學過的技能，有關我的相關資料。', 
-    completedDate: '2025年8月~開發中',
+    title: '個人資訊網站(本站)', 
+    description: '一個使用 Next.js 建立的個人網站和部落格，具有響應式設計和現代化的用戶界面，用來存放各種學過的技能，有關我的相關資料。', 
+    completedDate: '2025年8月~持續更新中',
     projectLink: 'https://github.com/RongjayWu/webside.git',
     image: 'webside_logo.png'
   },
