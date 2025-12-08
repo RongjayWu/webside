@@ -78,6 +78,6 @@ export default function TutorInfoCard() {
           <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500"></div>
         </div>
       </div>
-    </section>
+    </section> 
   );
 }
