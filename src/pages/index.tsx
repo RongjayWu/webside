@@ -12,10 +12,8 @@ import ScrollToTopButton from "../components/ScrollToTopButton";
 import OceanBackground from '../components/OceanBackground';
 import Footer from '../components/Footer';
 import { GetStaticProps } from 'next';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import { useEffect } from 'react';
+import Education from '../components/Education';
 
 interface Post {
   slug: string;
@@ -56,6 +54,7 @@ export default function Home({ posts }: HomeProps) {
         <About />
         <Skills />
         <Experience />
+        <Education />
         <Club />
         <Portfolio />
         <Contact tutorMode={false}/>
