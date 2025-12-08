@@ -170,7 +170,7 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
                   <div className="absolute left-0 mt-2 min-w-[160px] bg-white dark:bg-gray-900 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 text-left">
                     <a href="/#experience" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#experience'))}><FiBriefcase />工作經歷</a>
                     <a href="/#club" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#club'))}><FiUsers />社團經歷</a>
-                    <a href="/#study" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#study'))}><FiBook />求學經歷</a>
+                    <a href="/#study" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#education'))}><FiBook />求學經歷</a>
                   </div>
                 </div>
                 <a href="/#portfolio" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#portfolio'))}><FiGrid className="inline" />作品集</a>
