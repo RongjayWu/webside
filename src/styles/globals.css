@@ -1,3 +1,28 @@
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); }
+  20% { transform: translateY(-1px) translateX(-2px); }
+  40% { transform: translateY(-2px) translateX(2px); }
+  60% { transform: translateY(-1px) translateX(-2px); }
+  80% { transform: translateY(0) translateX(2px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+.animate-spin-slow {
+  animation: spin-slow 2.5s linear infinite;
+}
+.animate-wiggle {
+  animation: wiggle 1.2s ease-in-out infinite;
+}
+.animate-float {
+  animation: float 9.6s ease-in-out infinite;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

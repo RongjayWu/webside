@@ -10,10 +10,10 @@ import Contact from '../components/Contact';
 import Navbar from '../components/Navbar';
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import OceanBackground from '../components/OceanBackground';
+import Footer from '../components/Footer';
 import { GetStaticProps } from 'next';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import { useEffect } from 'react';
+import Education from '../components/Education';
 
 interface Post {
   slug: string;
@@ -26,6 +26,18 @@ interface HomeProps {
 }
 
 export default function Home({ posts }: HomeProps) {
+  // 首頁掛載時偵測 hash 並自動滾動
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      setTimeout(() => {
+        const el = document.getElementById(window.location.hash.replace('#', ''));
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -40,14 +52,17 @@ export default function Home({ posts }: HomeProps) {
       <main className="relative z-10">
         <Hero />
         <About />
-        <Experience />
-        <Club />
         <Skills />
+        <Experience />
+        <Education />
+        <Club />
         <Portfolio />
         <Contact tutorMode={false}/>
+        <Footer />
         <OceanBackground />
       </main>
       <ScrollToTopButton />
+      
     </div>
     </>
   );

@@ -5,6 +5,7 @@ import OceanBackground from './OceanBackground';
 import PostForm from './PostForm';
 import CategoryManager from './CategoryManager';
 import ArticleList from './ArticleList';
+import Footer from './Footer';
 
 type Article = { id: number; title: string; createdAt: string };
 
@@ -128,29 +129,35 @@ export default function AdminNewPostPage() {
 
   return (
     <div className="relative min-h-screen">
-      <Navbar />
+      <Navbar adminMode/>
       <main className="relative z-10 flex flex-col items-center justify-center min-h-[80vh]">
         <div className="w-full max-w-6xl mx-auto mt-6 sm:mt-8 md:mt-12 lg:mt-16 px-2 sm:px-4 lg:px-8">
           {/* 空白區塊：可用於排版留白或放置未來功能 */}
           <div className="h-20 sm:h-20 md:h-20 lg:h-20 xl:h-25"></div>
           {/* 發布新文章區塊 */}
-          <PostForm key={formKey} categories={categories} onSubmit={handleSubmit} error={error} />
-          {/* 分類管理區塊 */}
-          <CategoryManager
-            categories={categories}
-            onAdd={async (name) => { await handleAddCategory(name); refetchCategories(); }}
-            onEdit={async (id, name) => { await handleEditCategory(id, name); refetchCategories(); }}
-            onDelete={async (id) => { await handleDeleteCategory(id); refetchCategories(); }}
-          />
+          <section id="new-post">
+            <PostForm key={formKey} categories={categories} onSubmit={handleSubmit} error={error} />
+          </section>
           {/* 文章列表區塊 */}
-          <ArticleList
-            articles={articles}
-            onEdit={handleEditArticle}
-            onDelete={handleDeleteArticle}
-          />
-          
+          <section id="list">
+            <ArticleList
+              articles={articles}
+              onEdit={handleEditArticle}
+              onDelete={handleDeleteArticle}
+            />
+          </section>
+          {/* 分類管理區塊 */}
+          <section id="category">
+            <CategoryManager
+              categories={categories}
+              onAdd={async (name) => { await handleAddCategory(name); refetchCategories(); }}
+              onEdit={async (id, name) => { await handleEditCategory(id, name); refetchCategories(); }}
+              onDelete={async (id) => { await handleDeleteCategory(id); refetchCategories(); }}
+            />
+          </section>
         </div>
       </main>
+      <Footer /> 
       <OceanBackground />
     </div>
   );

@@ -1,21 +1,55 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FiSun, FiMoon, FiMenu, FiX } from "react-icons/fi";
+import { FiSun, FiMoon, FiMenu, FiX, FiHome, FiUser, FiBriefcase, FiUsers, FiAward, FiGrid, FiBookOpen, FiMail, FiChevronDown, FiBook } from "react-icons/fi";
+import { FiEdit2, FiList, FiTag } from "react-icons/fi";
 
 import { useRouter } from 'next/router';
 
 type NavbarProps = {
   onAdminLoginClick?: () => void;
+  hideMobileMenu?: boolean;
+  adminMode?: boolean;
 };
 
 export default function Navbar({ onAdminLoginClick }: NavbarProps) {
+        // 手機選單點擊自動收起
+        const handleMobileNavClick = (handler?: (e: React.MouseEvent) => void) => (e: React.MouseEvent) => {
+          setMobileOpen(false);
+          if (handler) handler(e);
+        };
+      // 聯繫我按鈕專用邏輯
+      const handleContactClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (typeof window !== 'undefined') {
+          const contactEl = document.getElementById('contact');
+          if (contactEl) {
+            contactEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            router.push('/#contact');
+          }
+        }
+      };
+    // 錨點跳轉/滾動邏輯
+    const handleNavClick = (hash: string) => (e: React.MouseEvent) => {
+      e.preventDefault();
+      if (typeof window !== 'undefined') {
+        if (window.location.pathname !== '/') {
+          router.push('/' + hash);
+        } else {
+          const el = document.getElementById(hash.replace('#', ''));
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }
+    };
   const router = require('next/router').useRouter();
   const [isAdminNewPost, setIsAdminNewPost] = useState(false);
+  // 由 props 控制是否隱藏漢堡選單，避免 hydration 錯誤
+  const { hideMobileMenu, adminMode } = arguments[0] || {};
   const [darkMode, setDarkMode] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [showNavbar, setShowNavbar] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   // 深色模式初始化與切換
   useEffect(() => {
@@ -39,31 +73,17 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
     }
   }, [darkMode]);
 
-  // 滾動顯示/隱藏
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // 向下滾動且超過 100px 隱藏
-        setShowNavbar(false);
-      } else {
-        // 向上滾動或在頂部顯示
-        setShowNavbar(true);
-      }
-      setLastScrollY(currentScrollY);
-    };
+  // ...existing code... (已移除滾動顯示/隱藏功能)
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
-
-  // 按鈕樣式
-  const buttonClass =
-    "p-2 rounded transition " +
-    (darkMode
-      ? "bg-gray-900 text-white hover:bg-gray-200"
-      : "bg-white text-gray-900 hover:bg-gray-300");
+  // 按鈕樣式（漢堡選單按鈕背景與暗色模式切換一致）
+  const burgerButtonClass =
+    "p-2 rounded-full shadow backdrop-blur-md transition border border-white/30 dark:border-gray-700/30";
+  const burgerButtonStyle = {
+    background: darkMode
+      ? 'linear-gradient(90deg, rgba(30,41,59,0.7) 0%, rgba(59,130,246,0.5) 100%)'
+      : 'linear-gradient(90deg, rgba(165,219,255,0.7) 0%, rgba(147,197,253,0.5) 100%)',
+    color: darkMode ? '#fff' : '#222',
+  };
 
   // SSR 階段一律為 false，CSR 再判斷路徑
   const [isTutorPage, setIsTutorPage] = useState(false);
@@ -79,9 +99,9 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-transform duration-300 ${
-        showNavbar ? "translate-y-0" : "-translate-y-full"
-      } bg-white dark:bg-gray-900 shadow`}
+      className="fixed w-full z-50 shadow backdrop-blur-md bg-gradient-to-r
+        from-blue-100/70 via-purple-100/60 to-indigo-100/70
+        dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/80"
     >
       <div className="max-w-6xl mx-auto px-4 flex justify-between items-center h-16">
         {/* LOGO */}
@@ -89,75 +109,109 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
           RJ.Wu
         </div>
 
-        {/* 導覽連結：桌面版 */}
-        <div className="hidden md:flex space-x-6 text-gray-700 dark:text-gray-200">
-          {/* /admin/new-post 不顯示任何導覽連結 */}
-          {isAdminNewPost ? null : isBlogPage ? (
-            <>
-              <a href="#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
-              <a href="#db-blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
-              {/* 分類檢索下拉選單 */}
-              <div className="relative group">
-                <button className="hover:text-blue-500 dark:hover:text-blue-400 transition ">分類檢索</button>
-                <div className="absolute left-0 mt-2 w-40 bg-white dark:bg-gray-900 rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity z-10">
-                  <ul className="py-2">
-                    {/* TODO: 這裡可串接分類資料，暫時靜態範例 */}
-                    <li><a href="#category-1" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類一</a></li>
-                    <li><a href="#category-2" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類二</a></li>
-                    <li><a href="#category-3" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類三</a></li>
-                  </ul>
-                </div>
+        {/* 管理員模式只顯示 LOGO 與管理員功能選單 */}
+        {adminMode ? (
+          <div className="hidden md:flex space-x-6 text-gray-700 dark:text-gray-200">
+            <a href="/admin" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 font-semibold"><FiUser className="inline" />管理員首頁</a>
+            {/* 部落格文章編輯下拉選單 */}
+            <div className="relative group">
+              <button className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 px-2 py-1 rounded font-semibold group-hover:bg-blue-100/30 dark:group-hover:bg-gray-800/40">
+                <FiBook className="inline" />部落格文章編輯 <FiChevronDown className="inline ml-1" />
+              </button>
+              <div className="absolute left-0 mt-2 min-w-[180px] bg-white dark:bg-gray-900 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 text-left">
+                <a href="#new-post" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={(e) => {
+                  e.preventDefault();
+                  if (window.location.pathname !== '/admin/blog') {
+                    window.location.href = '/admin/blog#new-post';
+                  } else {
+                    const el = document.getElementById('new-post');
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}>
+                  <FiEdit2 className="inline" />新增文章
+                </a>
+                <a href="#list" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={(e) => {
+                  e.preventDefault();
+                  if (window.location.pathname !== '/admin/blog') {
+                    window.location.href = '/admin/blog#list';
+                  } else {
+                    const el = document.getElementById('list');
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}>
+                  <FiList className="inline" />文章列表
+                </a>
+                <a href="#category" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={(e) => {
+                  e.preventDefault();
+                  if (window.location.pathname !== '/admin/blog') {
+                    window.location.href = '/admin/blog#category';
+                  } else {
+                    const el = document.getElementById('category');
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}>
+                  <FiTag className="inline" />分類管理
+                </a>
               </div>
-            </>
-          ) : isTutorPage ? (
-            <>
-              <a href="#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
-              <a href="#tutor-info" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">家教服務資訊</a>
-              <a href="#Textbook" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">教材預覽專區</a>
-              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
-            </>
-          ) : (
-            <>
-              <a href="#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
-              <a href="#about" className="hover:text-blue-500 dark:hover:text-blue-400 transition">關於我</a>
-              <a href="#skills" className="hover:text-blue-500 dark:hover:text-blue-400 transition">技能專區</a>
-              <a href="#portfolio" className="hover:text-blue-500 dark:hover:text-blue-400 transition">作品集</a>
-              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
-            </>
-          )}
-        </div>
+            </div>
+          </div>
+        ) : hideMobileMenu ? null : (
+          <div className="hidden md:flex space-x-6 text-gray-700 dark:text-gray-200">
+            {isAdminNewPost ? null : (
+              <>
+                <a href="/#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#hero'))}><FiHome className="inline" />首頁</a>
+                <a href="/#about" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#about'))}><FiUser className="inline" />關於我</a>
+                <a href="/#skills" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#skills'))}><FiAward className="inline" />技能專區</a>
+                {/* 經歷分群下拉選單 */}
+                <div className="relative group">
+                  <button className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 px-2 py-1 rounded group-hover:bg-blue-100/30 dark:group-hover:bg-gray-800/40">
+                    <FiBook className="inline" />相關經歷 <FiChevronDown className="inline ml-1" />
+                  </button>
+                  <div className="absolute left-0 mt-2 min-w-[160px] bg-white dark:bg-gray-900 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 text-left">
+                    <a href="/#experience" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#experience'))}><FiBriefcase />工作經歷</a>
+                    <a href="/#club" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#club'))}><FiUsers />社團經歷</a>
+                    <a href="/#study" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#education'))}><FiBook />求學經歷</a>
+                  </div>
+                </div>
+                <a href="/#portfolio" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#portfolio'))}><FiGrid className="inline" />作品集</a>
+                {/* <a href="/blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1"><FiBookOpen className="inline" />迷航日誌</a> */}
+                <a href="/tutor" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={() => setMobileOpen(false)}><FiBookOpen className="inline" />家教資訊</a>
+                <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleContactClick)}><FiMail className="inline" />聯繫我</a>
+              </>
+            )}
+          </div>
+        )}
 
         {/* 按鈕區 */}
   <div className="flex items-center space-x-4">
           {/* 暗色模式切換 */}
-          <button onClick={() => setDarkMode(!darkMode)} className={buttonClass}>
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className={
+              `p-2 rounded-full shadow-lg backdrop-blur-md transition border border-white/30 dark:border-gray-700/30
+              ring-2 ring-blue-400/40 dark:ring-blue-500/60
+              hover:ring-4 hover:ring-blue-400/80 dark:hover:ring-blue-500/90
+              animate-glow`
+            }
+            style={{
+              background: darkMode
+                ? 'linear-gradient(90deg, rgba(30,41,59,0.7) 0%, rgba(59,130,246,0.5) 100%)'
+                : 'linear-gradient(90deg, rgba(165,219,255,0.7) 0%, rgba(147,197,253,0.5) 100%)',
+              color: darkMode ? '#fff' : '#222',
+              boxShadow: darkMode
+                ? '0 0 16px 4px rgba(59,130,246,0.5), 0 0 8px 2px rgba(147,197,253,0.3)'
+                : '0 0 16px 4px rgba(59,130,246,0.4), 0 0 8px 2px rgba(165,219,255,0.3)',
+            }}
+          >
             {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
           </button>
 
-          {/* /admin/new-post 右側顯示登出按鈕，其他頁維持原本按鈕 */}
-          {isAdminNewPost ? (
-            <button
-              type="button"
-              className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow hover:scale-105 transition-all"
-              onClick={() => router.push('/blog')}
-            >
-              登出
-            </button>
-          ) : isBlogPage && (
-            <button
-              type="button"
-              className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow hover:scale-105 transition-all"
-              onClick={onAdminLoginClick}
-            >
-              管理員登入
-            </button>
-          )}
-
-          {/* /admin/new-post 不顯示漢堡選單 */}
-          {!isAdminNewPost && (
+          {/* /admin/new-post 或 hideMobileMenu 不顯示漢堡選單 */}
+          {(!isAdminNewPost && !hideMobileMenu) && (
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={buttonClass + " md:hidden"}
+              className={burgerButtonClass + " md:hidden"}
+              style={burgerButtonStyle}
             >
               {mobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
@@ -167,38 +221,24 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
 
       {/* 手機選單：/admin/new-post 不顯示 */}
       {!isAdminNewPost && mobileOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 px-4 py-2 space-y-2 flex flex-col items-center">
-          {isBlogPage ? (
+        <div
+          className="md:hidden text-gray-700 dark:text-gray-200 px-4 py-2 space-y-2 flex flex-col items-center bg-gradient-to-r from-blue-100/40 via-purple-100/30 to-indigo-100/40 dark:from-gray-900/40 dark:via-gray-800/30 dark:to-gray-900/40 backdrop-blur-lg rounded-xl shadow-lg"
+          style={{
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+          }}
+        >
+          {isAdminNewPost ? null : (
             <>
-              <a href="#hero" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">首頁</a>
-              <a href="#db-blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition">個人部落格</a>
-              {/* 分類檢索下拉選單（手機版） */}
-              <div className="relative w-full it">
-                <button className="hover:text-blue-500 dark:hover:text-blue-400 transition ">分類檢索</button>
-                <div className="absolute left-0 mt-2 w-full bg-white dark:bg-gray-900 rounded shadow-lg z-10">
-                  <ul className="py-2">
-                    {/* TODO: 這裡可串接分類資料，暫時靜態範例 */}
-                    <li><a href="#category-1" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類一</a></li>
-                    <li><a href="#category-2" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類二</a></li>
-                    <li><a href="#category-3" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800">分類三</a></li>
-                  </ul>
-                </div>
-              </div>
-            </>
-          ) : isTutorPage ? (
-            <>
-              <a href="#hero" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">簡介</a>
-              <a href="#tutor-info" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">家教服務資訊</a>
-              <a href="#Textbook" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">教材預覽專區</a>
-              <a href="#contact" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
-            </>
-          ) : (
-            <>
-              <a href="#hero" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">簡介</a>
-              <a href="#about" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">關於我</a>
-              <a href="#skills" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">技能專區</a>
-              <a href="#portfolio" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">作品集</a>
-              <a href="#contact" className="block hover:text-blue-500 dark:hover:text-blue-400 transition">取得聯繫</a>
+              <a href="/#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#hero'))}><FiHome className="inline" />首頁</a>
+              <a href="/#about" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#about'))}><FiUser className="inline" />關於我</a>
+              <a href="/#skills" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#skills'))}><FiAward className="inline" />技能專區</a>
+              <a href="/#experience" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#experience'))}><FiBriefcase />工作經歷</a>
+              <a href="/#club" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#club'))}><FiUsers />社團經歷</a>
+              <a href="/#study" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#study'))}><FiBook />求學經歷</a>
+              <a href="/#portfolio" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#portfolio'))}><FiGrid className="inline" />作品集</a>
+              <a href="/tutor" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={() => setMobileOpen(false)}><FiBookOpen className="inline" />家教資訊</a>
+              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleContactClick)}><FiMail className="inline" />聯繫我</a>
             </>
           )}
         </div>
