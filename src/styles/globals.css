@@ -84,19 +84,19 @@ html {
 }
 @keyframes bubble-rise {
   0% {
-    transform: translateY(100vh) scale(0);
+    transform: translateY(0) scale(0);
     opacity: 0;
   }
   10% {
     opacity: 1;
-    transform: translateY(90vh) scale(1);
+    transform: translateY(-10vh) scale(1);
   }
   90% {
     opacity: 1;
-    transform: translateY(-10vh) scale(1);
+    transform: translateY(-105vh) scale(1);
   }
   100% {
-    transform: translateY(-20vh) scale(0);
+    transform: translateY(-115vh) scale(0);
     opacity: 0;
   }
 }
@@ -163,4 +163,54 @@ html {
 .text-outline {
   -webkit-text-stroke: 2px #4f46e5; /* 藍色描邊 */
   color: white;
+}
+
+.intro-noise {
+  background-image: radial-gradient(circle at 20% 20%, rgba(125, 211, 252, 0.12), transparent 22%),
+    radial-gradient(circle at 80% 70%, rgba(56, 189, 248, 0.08), transparent 20%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.03), transparent 20%, rgba(255, 255, 255, 0.02) 45%, transparent 70%);
+  mix-blend-mode: screen;
+  opacity: 0.8;
+}
+
+.intro-radar {
+  background-image: radial-gradient(circle at center, rgba(103, 232, 249, 0.12), transparent 34%),
+    linear-gradient(90deg, transparent 0, rgba(103, 232, 249, 0.08) 50%, transparent 100%);
+  animation: intro-radar-scan 5s linear infinite;
+  opacity: 0.28;
+}
+
+@keyframes intro-radar-scan {
+  0% {
+    transform: translateY(-25%);
+  }
+  100% {
+    transform: translateY(25%);
+  }
+}
+
+@keyframes float-random {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-10px) translateX(8px);
+  }
+  50% {
+    transform: translateY(-18px) translateX(-10px);
+  }
+  75% {
+    transform: translateY(-8px) translateX(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-radar {
+    animation: none;
+  }
+
+  .intro-noise {
+    opacity: 0.45;
+  }
 }
