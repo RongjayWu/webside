@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
-import OceanBackground from '../components/OceanBackground';
+import OceanBackground from '../components/BackgroundComponents/OceanBackground';
 import Footer from '../components/Footer';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 

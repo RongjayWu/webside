@@ -5,15 +5,15 @@ import Skills from '../components/Skills';
 import Club from '../components/Club';
 import Experience from '../components/Experience';
 import Portfolio from '../components/Portfolio';
-import DbBlogList from '../components/DbBlogList';
 import Contact from '../components/Contact';
 import Navbar from '../components/Navbar';
-import ScrollToTopButton from "../components/ScrollToTopButton";
-import OceanBackground from '../components/OceanBackground';
+import ScrollToTopButton from '../components/ScrollToTopButton';
+import DeepSeaBackground from '../components/BackgroundComponents/DeepSeaBackground';
+import HomeIntroOverlay from '../components/BackgroundComponents/HomeIntroOverlay';
 import Footer from '../components/Footer';
-import { GetStaticProps } from 'next';
 import { useEffect } from 'react';
 import Education from '../components/Education';
+import { useSessionIntro } from '../hooks/useSessionIntro';
 
 interface Post {
   slug: string;
@@ -26,44 +26,60 @@ interface HomeProps {
 }
 
 export default function Home({ posts }: HomeProps) {
-  // 首頁掛載時偵測 hash 並自動滾動
+  const { mode, phase, isIntroPlaying, finishIntro } = useSessionIntro();
+
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.hash) {
-      setTimeout(() => {
-        const el = document.getElementById(window.location.hash.replace('#', ''));
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 300);
+    if (typeof document === 'undefined') {
+      return;
     }
-  }, []);
+
+    document.documentElement.dataset.homeIntro = isIntroPlaying ? 'blocked' : 'ready';
+
+    return () => {
+      delete document.documentElement.dataset.homeIntro;
+    };
+  }, [isIntroPlaying]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || phase !== 'done' || !window.location.hash) {
+      return;
+    }
+
+    const handle = window.setTimeout(() => {
+      const el = document.getElementById(window.location.hash.replace('#', ''));
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 120);
+
+    return () => window.clearTimeout(handle);
+  }, [phase]);
 
   return (
     <>
       <Head>
-        <title>Rongjay</title>
+        <title>蒼海迴響 - Rongcean</title>
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </Head>
       <div className="relative overflow-hidden">
-      {/* <Background /> */}
-      <Navbar />
-      <main className="relative z-10">
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Education />
-        <Club />
-        <Portfolio />
-        <Contact tutorMode={false}/>
-        <Footer />
-        <OceanBackground />
-      </main>
-      <ScrollToTopButton />
-      
-    </div>
+        <Navbar />
+        <DeepSeaBackground />
+        <main className={`relative z-10 transition-all duration-700 ${isIntroPlaying ? 'pointer-events-none opacity-0 blur-sm' : 'opacity-100 blur-0'}`}>
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Education />
+          <Club />
+          <Portfolio />
+          <Contact tutorMode={false} />
+          <Footer />
+        </main>
+        <ScrollToTopButton />
+        <HomeIntroOverlay mode={mode} active={isIntroPlaying} onComplete={finishIntro} />
+      </div>
     </>
   );
 }

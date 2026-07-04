@@ -1,5 +1,5 @@
 
-import textbooks from '../data/textbooks.json';
+import textbooks from '../../../data/textbooks.json';
 
 export default function TextbookPreview() {
 	return (

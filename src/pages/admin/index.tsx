@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import OceanBackground from '../../components/OceanBackground';
+import OceanBackground from '../../components/BackgroundComponents/OceanBackground';
 
 export default function AdminHome() {
   return (

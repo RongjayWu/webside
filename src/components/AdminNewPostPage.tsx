@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Navbar from './Navbar';
-import OceanBackground from './OceanBackground';
+import OceanBackground from './BackgroundComponents/OceanBackground';
 import PostForm from './PostForm';
 import CategoryManager from './CategoryManager';
 import ArticleList from './ArticleList';

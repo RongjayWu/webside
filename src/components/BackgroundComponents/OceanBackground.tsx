@@ -1,19 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-
-// 氣泡介面定義
-interface Bubble {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  speed: number;
-  opacity: number;
-  delay: number;
-}
+import OceanBubbles from './OceanBubbles';
+import OceanParticles from './OceanParticles';
 
 export default function OceanBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [scrollDepth, setScrollDepth] = useState(0); // 滾動深度 0-1
 
@@ -30,27 +20,6 @@ export default function OceanBackground() {
     handleScroll(); // 初始化
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // 初始化氣泡
-  useEffect(() => {
-    const createBubbles = () => {
-      const newBubbles: Bubble[] = [];
-      for (let i = 0; i < 20; i++) {
-        newBubbles.push({
-          id: i,
-          x: Math.random() * 100, // 0-100% 位置
-          y: 100 + Math.random() * 20, // 從底部開始
-          size: Math.random() * 20 + 5, // 5-25px
-          speed: Math.random() * 3 + 2, // 2-5秒動畫時間
-          opacity: Math.random() * 0.6 + 0.2, // 0.2-0.8 透明度
-          delay: Math.random() * 5, // 0-5秒延遲
-        });
-      }
-      setBubbles(newBubbles);
-    };
-
-    createBubbles();
   }, []);
 
   // 滑鼠移動效果
@@ -147,59 +116,11 @@ export default function OceanBackground() {
         />
       )}
 
-      {/* 氣泡動畫 - 深海氣泡變少變小 */}
-      <div className="absolute inset-0">
-        {bubbles.map((bubble) => (
-          <div
-            key={bubble.id}
-            className="absolute rounded-full backdrop-blur-sm animate-bubble-rise transition-all duration-1000"
-            style={{
-              left: `${bubble.x}%`,
-              width: `${bubble.size * (1 - scrollDepth * 0.3)}px`, // 深海氣泡變小
-              height: `${bubble.size * (1 - scrollDepth * 0.3)}px`,
-              opacity: bubble.opacity * (1 - scrollDepth * 0.4), // 深海氣泡變少
-              animationDuration: `${bubble.speed + 3 + scrollDepth * 2}s`, // 深海氣泡變慢
-              animationDelay: `${bubble.delay}s`,
-              background: scrollDepth > 0.6 
-                ? `rgba(100,200,255,${0.2 * (1 - scrollDepth * 0.5)})` // 深海藍色氣泡
-                : `rgba(255,255,255,${0.4 * (1 - scrollDepth * 0.3)})`, // 淺海白色氣泡
-              transform: `translateX(${Math.sin(mousePosition.y * 0.01 + bubble.id) * 10 * (1 - scrollDepth * 0.5)}px)`,
-            }}
-          >
-            {/* 氣泡內部光澤效果 - 深海變暗 */}
-            <div 
-              className="absolute top-1 left-1 w-2 h-2 bg-white rounded-full transition-opacity duration-1000"
-              style={{
-                opacity: 0.6 * (1 - scrollDepth * 0.7),
-              }}
-            />
-          </div>
-        ))}
-      </div>
+      <OceanBubbles scrollDepth={scrollDepth} mousePosition={mousePosition} />
 
       {/* 海流波浪效果 - 深海變慢變暗 - 已刪除 */}
 
-      {/* 海洋粒子效果 - 深海粒子變化 */}
-      <div className="absolute inset-0">
-        {Array.from({ length: 100 }).map((_, i) => (
-          <div
-            key={`particle-${i}`}
-            className="absolute rounded-full animate-float-random transition-all duration-1000"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${1 + scrollDepth * 2}px`, // 深海粒子變大
-              height: `${1 + scrollDepth * 2}px`,
-              background: scrollDepth > 0.7 
-                ? `rgba(59,130,246,${0.3 + scrollDepth * 0.2})` // 深海藍色粒子
-                : `rgba(103,232,249,${0.4 * (1 - scrollDepth * 0.3)})`, // 淺海青色粒子
-              animationDelay: `${Math.random() * 10}s`,
-              animationDuration: `${8 + Math.random() * 4 + scrollDepth * 3}s`, // 深海粒子變慢
-              opacity: scrollDepth > 0.8 ? 0.8 : 0.4,
-            }}
-          />
-        ))}
-      </div>
+      <OceanParticles scrollDepth={scrollDepth} />
 
       {/* 深海生物光效 - 只在最深處顯示 */}
       {scrollDepth > 0.8 && (
