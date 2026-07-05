@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import GlassCard from '../../PublicUI/GlassCard'; // 引入剛才抽出的背景組件
 
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState('TeachingJourney');
@@ -45,23 +46,25 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
-      <ul className="space-y-1">
-        {navItems.map((item) => (
-          <li key={item.id}>
-            <button
-              onClick={() => handleScroll(item.id)}
-              className={`w-full text-left text-sm px-4 py-2.5 rounded-xl transition-all ${
-                activeSection === item.id
-                  ? 'bg-blue-50 text-blue-600 font-bold'
-                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
-              }`}
-            >
-              {item.label}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <GlassCard className="space-y-4">
+      <nav className="rounded-2xl p-4 shadow-sm ">
+        <ul className="space-y-1">
+          {navItems.map((item) => (
+            <li key={item.id}>
+              <button
+                onClick={() => handleScroll(item.id)}
+                className={`w-full text-left text-sm px-4 py-2.5 rounded-xl transition-all ${
+                  activeSection === item.id
+                    ? 'bg-blue-50 text-blue-600 font-bold'
+                    : 'text-white/80 hover:bg-slate-50 hover:text-slate-800'
+                }`}
+              >
+                {item.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </GlassCard>
   );
 }

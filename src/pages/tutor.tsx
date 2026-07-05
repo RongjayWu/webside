@@ -76,7 +76,7 @@ export default function Tutor({ data }: TutorPageProps) {
   return (
     <>
       <Head>
-        <title>潮汐知響 - Rongcean</title>
+        <title>潮汐知音 - Rongcean</title>
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
@@ -137,7 +137,7 @@ export default function Tutor({ data }: TutorPageProps) {
 export const getStaticProps: GetStaticProps<TutorPageProps> = async () => {
   // 未來可以直接在這裡下 Await 連線資料庫撈資料
   const mockData: TutorProfileData = {
-    name: "陳大同",
+    name: "吳榮傑",
     avatarUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150",
     tags: ["升學輔導教師", "統測專業科目家教", "會考輔導教師"],
     status: "Available",

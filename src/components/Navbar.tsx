@@ -185,7 +185,7 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
         {/* 按鈕區 */}
   <div className="flex items-center space-x-4">
           {/* 暗色模式切換 */}
-          <button
+          {/* <button
             onClick={() => setDarkMode(!darkMode)}
             className={
               `p-2 rounded-full shadow-lg backdrop-blur-md transition border border-white/30 dark:border-gray-700/30
@@ -204,7 +204,7 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
             }}
           >
             {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
-          </button>
+          </button> */}
 
           {/* /admin/new-post 或 hideMobileMenu 不顯示漢堡選單 */}
           {(!isAdminNewPost && !hideMobileMenu) && (
