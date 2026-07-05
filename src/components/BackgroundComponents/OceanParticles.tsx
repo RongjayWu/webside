@@ -17,7 +17,7 @@ interface OceanParticlesProps {
 
 export default function OceanParticles({ scrollDepth }: OceanParticlesProps) {
   const particles = useMemo<Particle[]>(() => {
-    const totalParticles = 180;
+    const totalParticles = 500;
 
     return Array.from({ length: totalParticles }).map((_, id) => ({
       id,

@@ -24,7 +24,7 @@ export default function OceanBubbles({ scrollDepth, mousePosition }: OceanBubble
   useEffect(() => {
     const newBubbles: Bubble[] = [];
 
-    for (let i = 0; i < 20; i += 1) {
+    for (let i = 0; i < 50; i += 1) {
       newBubbles.push({
         id: i,
         x: Math.random() * 100,
