@@ -1,28 +1,42 @@
-interface subjects {
-  steps: { juniorHigh: string[]; vocational: string[] };
+import GlassCard from "../../PublicUI/GlassCard";
+interface SubjectsProps {
+  steps: {
+    juniorHigh: string[];
+    vocational: string[];
+  };
 }
 
-export default function Subjects({ steps: subjects }: subjects) {
+export default function Subjects({ steps }: SubjectsProps) {
   return (
-    <section id="Subjects" className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 space-y-6">
-      <h3 className="text-2xl font-bold text-slate-900">4. Subjects</h3>
+    <GlassCard id="Subjects" className="p-8 space-y-6">  
+      <h3 className="text-2xl font-bold text-gray-900 dark:text-white">4. Subjects</h3>
       <div>
-        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">會考科目</h4>
+        <h4 className="text-base font-bold text-gray-400 dark:text-white uppercase tracking-wider mb-3">會考科目</h4>
         <div className="flex flex-wrap gap-2">
-          {subjects.juniorHigh.map((sub, i) => (
-            <span key={i} className="bg-slate-50 border border-slate-200 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">📚 {sub}</span>
+          {steps.juniorHigh.map((sub, i) => (
+            <span 
+              key={i} 
+              className="bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-xl text-xs font-medium border border-transparent dark:border-white/5"
+            >
+              📚 {sub}
+            </span>
           ))}
         </div>
       </div>
+      
       <div>
-        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">統測科目 / 專業科目</h4>
+        <h4 className="text-base font-bold text-gray-400 dark:text-white uppercase tracking-wider mb-3">統測科目 / 專業科目</h4>
         <div className="flex flex-wrap gap-2">
-          {subjects.vocational.map((sub, i) => (
-            <span key={i} className="bg-blue-50/50 border border-blue-100 text-blue-700 px-3 py-1.5 rounded-xl text-xs font-medium">⚡ {sub}</span>
+          {steps.vocational.map((sub, i) => (
+            <span 
+              key={i} 
+              className="bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-white/90 px-3 py-1.5 rounded-xl text-xs font-medium border border-blue-500/20"
+            >
+              ⚡ {sub}
+            </span>
           ))}
         </div>
       </div>
-    </section>
+    </GlassCard>
   );
-  
 }
