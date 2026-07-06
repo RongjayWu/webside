@@ -91,8 +91,8 @@ export default function Tutor({ data }: TutorPageProps) {
         <main className="relative z-10 max-w-7xl mx-auto px-4 py-24 grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* 左側欄位 20% (lg:col-span-3) */}
-          <aside className="sticky top-24 h-fit lg:col-span-3">
-            <div className="sticky top-24 h-fit space-y-6">
+          <aside className="md:sticky top-24 h-fit lg:col-span-3">
+            <div className="top-24 h-fit space-y-6">
               <ProfileCard name={data.name} avatarUrl={data.avatarUrl} tags={data.tags} />
               <TeachingStatus status={data.status} currentFocus={data.currentFocus} />
               <Navigation />
