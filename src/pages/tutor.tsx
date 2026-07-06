@@ -82,7 +82,7 @@ export default function Tutor({ data }: TutorPageProps) {
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </Head>
 
-      <div className="relative min-h-screen overflow-hidden text-slate-800 antialiased">
+      <div className="relative min-h-screen text-slate-800 antialiased">
         {/* 完美保留你原有的深海背景與導覽列 */}
         <Navbar />
         
@@ -91,8 +91,8 @@ export default function Tutor({ data }: TutorPageProps) {
         <main className="relative z-10 max-w-7xl mx-auto px-4 py-24 grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* 左側欄位 20% (lg:col-span-3) */}
-          <aside className="lg:col-span-3">
-            <div className="sticky top-24 space-y-6">
+          <aside className="sticky top-24 h-fit lg:col-span-3">
+            <div className="sticky top-24 h-fit space-y-6">
               <ProfileCard name={data.name} avatarUrl={data.avatarUrl} tags={data.tags} />
               <TeachingStatus status={data.status} currentFocus={data.currentFocus} />
               <Navigation />
@@ -104,7 +104,7 @@ export default function Tutor({ data }: TutorPageProps) {
             <TeachingJourney journey={data.journey} />
             <TeachingPhilosophy philosophies={data.philosophies} />
             <TeachingApproach />
-            {/* <Subjects subjects={data.subjects} /> */}
+            <Subjects steps={data.subjects} />
             <StudentGrowthStories stories={data.growthStories} />
             <FeaturedTeachingCases cases={data.featuredCases} />
             
@@ -141,7 +141,7 @@ export const getStaticProps: GetStaticProps<TutorPageProps> = async () => {
     avatarUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150",
     tags: ["升學輔導教師", "統測專業科目家教", "會考輔導教師"],
     status: "Available",
-    currentFocus: ["統測專業科目", "會考衝刺", "弱科補強"],
+    currentFocus: ["統測專業科目", "會考衝刺"],
     journey: {
       whyStart: "大二時接觸到第一個技職學生，看到他眼中的迷茫，開啟了我的教學之路...",
       whyExamPrep: "升學考試不只是考智商，更是考系統性複習的策略與心態調適。",
@@ -150,7 +150,7 @@ export const getStaticProps: GetStaticProps<TutorPageProps> = async () => {
     philosophies: ["重視理解而非死背", "找出學生真正弱點", "建立學習習慣", "培養自主思考能力"],
     subjects: {
       juniorHigh: ["國中會考數學", "國中會考理化"],
-      vocational: ["統測專業科目（一）", "統測專業科目（二）", "計算機概論"]
+      vocational: ["基本電學", "電子學", "程式設計", "數位邏輯", "微處理機"]
     },
     growthStories: [
       { id: "s1", startProblem: "公式死背、題目變型就不會", process: "帶領學生重構電學與基礎圖形邏輯", finalChange: "不只分數提升，更能主動向同學講解題目" }
