@@ -8,10 +8,13 @@ interface SubjectsProps {
 
 export default function Subjects({ steps }: SubjectsProps) {
   return (
-    <GlassCard id="Subjects" className="p-8 space-y-6">  
-      <h3 className="text-2xl font-bold text-gray-900 dark:text-white">4. Subjects</h3>
+    <GlassCard id="Subjects" className="p-8 space-y-6 scroll-mt-24 bg-white/80 dark:bg-gray-800/50">  
+      <div className="space-y-1">
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">探勘的知識海域：會考與資電類專業學科</h3>
+        <div className="text-xs font-bold tracking-widest text-blue-500 dark:text-cyan-400 uppercase">Charted Ocean</div>
+      </div>
       <div>
-        <h4 className="text-base font-bold text-gray-400 dark:text-white uppercase tracking-wider mb-3">會考科目</h4>
+        <h4 className="text-base font-bold text-gray-400 dark:text-white uppercase tracking-wider mb-3">🗺️ 基礎常規海域 (會考科目)</h4>
         <div className="flex flex-wrap gap-2">
           {steps.juniorHigh.map((sub, i) => (
             <span 
@@ -25,7 +28,7 @@ export default function Subjects({ steps }: SubjectsProps) {
       </div>
       
       <div>
-        <h4 className="text-base font-bold text-gray-400 dark:text-white uppercase tracking-wider mb-3">統測科目 / 專業科目</h4>
+        <h4 className="text-base font-bold text-gray-400 dark:text-white uppercase tracking-wider mb-3">⚡ 蓄能風暴海域 (資電類專業科目)</h4>
         <div className="flex flex-wrap gap-2">
           {steps.vocational.map((sub, i) => (
             <span 
