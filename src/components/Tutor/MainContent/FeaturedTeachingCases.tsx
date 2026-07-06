@@ -9,16 +9,11 @@ interface CasesProps {
 export default function FeaturedTeachingCases({ cases }: CasesProps) {
   return (
     // 1. 外層容器：套用 GlassCard，移除白底死板樣式，並加上 scroll-mt-24 優化導覽跳轉
-    <GlassCard id="FeaturedTeachingCases" className="p-8 space-y-6 scroll-mt-24">
+    <GlassCard id="FeaturedTeachingCases" className="p-8 space-y-6 scroll-mt-24 bg-white/80 dark:bg-gray-800/50">
       
-      {/* 頂部標題列 */}
-      <div className="flex justify-between items-center mb-2">
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-          精選教學案例
-        </h3>
-        <span className="text-xs bg-gray-100 dark:bg-gray-700/50 text-gray-500 dark:text-gray-400 px-2.5 py-1 rounded-md font-medium">
-          近期展示
-        </span>
+      <div className="space-y-1">
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">歷年靠岸的豐收戰績：精選案例分享</h3>
+        <div className="text-xs font-bold tracking-widest text-blue-500 dark:text-cyan-400 uppercase">Anchored Triumphs</div>
       </div>
 
       {/* 2. 內層網格：案例卡片組 */}
@@ -46,7 +41,7 @@ export default function FeaturedTeachingCases({ cases }: CasesProps) {
       </div>
 
       {/* 3. 底部按鈕：改為符合毛玻璃風格的軟霓虹按鈕 */}
-      <Link 
+      {/* <Link 
         href="/tutor/cases" 
         className="block w-full text-center text-sm font-semibold 
                    text-blue-600 dark:text-blue-400 py-3 rounded-xl
@@ -55,7 +50,7 @@ export default function FeaturedTeachingCases({ cases }: CasesProps) {
                    transition-all duration-300 backdrop-blur-sm"
       >
         View All Teaching Cases →
-      </Link>
+      </Link> */}
       
     </GlassCard>
   );

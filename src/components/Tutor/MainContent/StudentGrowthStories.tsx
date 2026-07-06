@@ -8,15 +8,11 @@ interface StoriesProps {
 export default function StudentGrowthStories({ stories }: StoriesProps) {
   return (
     // 1. 外層容器：套用 GlassCard，移除死白底色並加上 scroll-mt-24
-    <GlassCard id="StudentGrowthStories" className="p-8 space-y-6 scroll-mt-24">
+    <GlassCard id="StudentGrowthStories" className="p-8 space-y-6 scroll-mt-24 bg-white/80 dark:bg-gray-800/50">
       
-      <div>
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          學生培育成果
-        </h3>
-        <p className="text-sm text-gray-400 dark:text-gray-500">
-          著重於能力與自主學習習慣的建立過程
-        </p>
+      <div className="space-y-1">
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">新手水手航海日誌：學生的進步曲線</h3>
+        <div className="text-xs font-bold tracking-widest text-blue-500 dark:text-cyan-400 uppercase">Logbook</div>
       </div>
 
       <div className="space-y-6">

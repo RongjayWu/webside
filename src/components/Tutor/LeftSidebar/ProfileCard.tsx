@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import GlassCard from '../../PublicUI/GlassCard'; // 引入剛才抽出的背景組件
+import { DecorativeBorder } from '../../PublicUI/Decoration';
 
 interface ProfileCardProps {
   name: string;
@@ -44,6 +45,8 @@ export default function ProfileCard({ name, avatarUrl, tags }: ProfileCardProps)
           ))}
         </div>
       </div>
+      {/* 底部裝飾漸層線 */}
+      <DecorativeBorder />
     </GlassCard>
   );
 }
