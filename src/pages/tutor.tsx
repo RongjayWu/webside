@@ -11,7 +11,7 @@ import { useSessionIntro } from '../hooks/useSessionIntro';
 // 引入新架構的型態與組件
 import { TutorProfileData } from '../types/tutor';
 import ProfileCard from '../components/Tutor/LeftSidebar/ProfileCard';
-import TeachingStatus from '../components/Tutor/LeftSidebar/TeachingStatus';
+import TeachingStatus from '../components/Tutor/RightSidebar/TeachingStatus';
 import Navigation from '../components/Tutor/LeftSidebar/Navigation';
 
 import TeachingJourney from '../components/Tutor/MainContent/TeachingJourney';
@@ -55,7 +55,6 @@ export default function Tutor({ data }: TutorPageProps) {
           <aside className="md:sticky top-24 h-fit lg:col-span-3">
             <div className="space-y-6">
               <ProfileCard name={data.name} avatarUrl={data.avatarUrl} tags={data.tags} />
-              <TeachingStatus status={data.status} currentFocus={data.currentFocus} />
               <Navigation />
             </div>
           </aside>
@@ -77,6 +76,7 @@ export default function Tutor({ data }: TutorPageProps) {
           <aside className="lg:col-span-3">
             <div className="sticky top-24 space-y-6">
               <TeachingHours totalHours={data.totalHours} />
+              <TeachingStatus status={data.status} currentFocus={data.currentFocus} />
               <CurrentNextLesson schedule={data.lessonSchedule} />
               <CasesSummary totalCases={data.featuredCases.length} />
             </div>
