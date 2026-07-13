@@ -1,4 +1,4 @@
-import clubs from '../data/clubs.json';
+import clubs from '../../data/clubs.json';
 
 export default function Club() {
   return (

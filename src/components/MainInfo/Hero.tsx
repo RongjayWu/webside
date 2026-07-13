@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { FiChevronDown } from "react-icons/fi";
 import { FaFacebookF, FaLine, FaInstagram, FaGithub, FaEnvelope, FaPhone } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import socialLinks from '../data/social-links.json';
+import socialLinks from '../../data/social-links.json';
 
 const quote = "Software is a great combination of artistry and engineering. – Bill Gates";
 

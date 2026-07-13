@@ -1,20 +1,19 @@
 import Head from 'next/head';
-import Hero from '../components/Hero';
-import About from '../components/About';
-import Skills from '../components/Skills';
-import Club from '../components/Club';
-import Experience from '../components/Experience';
-import Portfolio from '../components/Portfolio';
-import Contact from '../components/Contact';
-import Navbar from '../components/Navbar';
-import ScrollToTopButton from '../components/ScrollToTopButton';
+import Hero from '../components/MainInfo/Hero';
+import About from '../components/MainInfo/About';
+import Skills from '../components/MainInfo/Skills';
+import Club from '../components/MainInfo/Club';
+import Experience from '../components/MainInfo/Experience';
+import Portfolio from '../components/MainInfo/Portfolio';
+import Education from '../components/MainInfo/Education';
+import Contact from '../components/PublicUI/Contact';
+import Navbar from '../components/PublicUI/Navbar';
+import ScrollToTopButton from '../components/PublicUI/ScrollToTopButton';
 import DeepSeaBackground from '../components/BackgroundComponents/DeepSeaBackground';
 import HomeIntroOverlay from '../components/BackgroundComponents/HomeIntroOverlay';
-import Footer from '../components/Footer';
+import Footer from '../components/BackgroundComponents/Footer';
 import { useEffect } from 'react';
-import Education from '../components/Education';
 import { useSessionIntro } from '../hooks/useSessionIntro';
-
 interface Post {
   slug: string;
   title: string;

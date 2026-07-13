@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { FaFacebookF, FaLine, FaInstagram, FaGithub, FaEnvelope, FaPhone } from "react-icons/fa";
-import socialLinks from '../data/social-links.json';
+import socialLinks from '../../data/social-links.json';
 
 interface ContactProps {
   tutorMode?: boolean;

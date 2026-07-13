@@ -1,5 +1,5 @@
 import React from "react";
-import educations from "../data/educations.json";
+import educations from "../../data/educations.json";
 
 const EducationCard: React.FC<{
   degree: string;

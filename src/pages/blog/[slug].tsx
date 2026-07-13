@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import OceanBackground from '../components/BackgroundComponents/OceanBackground';
-import Footer from '../components/Footer';
-import ScrollToTopButton from '../components/ScrollToTopButton';
+import Navbar from '../../components/PublicUI/Navbar';
+import OceanBackground from '../../components/BackgroundComponents/OceanBackground';
+import Footer from '../../components/BackgroundComponents/Footer';
+import ScrollToTopButton from '../../components/PublicUI/ScrollToTopButton';
 
 interface Post {
   id: number;
