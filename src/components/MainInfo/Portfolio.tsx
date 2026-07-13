@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import projects from '../data/portfolio.json';
+import projects from '../../data/portfolio.json';
 
 export default function Portfolio() {
   const projectRefs = useRef<HTMLDivElement[]>([]);

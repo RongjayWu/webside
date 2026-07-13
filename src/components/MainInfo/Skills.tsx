@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { skills } from "../data/skills";
+import { skills } from "../../data/skills";
 // 隨機決定 scale-x-100 或 scale-x-[-100] 讓漂浮方向不同
 function getRandomFloatDirection(idx: number) {
   return idx % 2 === 0 ? 'scale-x-100' : 'scale-x-[-100]';

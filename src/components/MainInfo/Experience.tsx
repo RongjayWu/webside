@@ -1,4 +1,4 @@
-import experiences from '../data/experiences.json';
+import experiences from '../../data/experiences.json';
 
 export default function Experience() {
   return (

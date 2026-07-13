@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Navbar from './Navbar';
-import OceanBackground from './BackgroundComponents/OceanBackground';
+import Navbar from '../../components/PublicUI/Navbar';
+import OceanBackground from '../BackgroundComponents/OceanBackground';
 import PostForm from './PostForm';
 import CategoryManager from './CategoryManager';
 import ArticleList from './ArticleList';
-import Footer from './Footer';
+import Footer from '../BackgroundComponents/Footer';
 
 type Article = { id: number; title: string; createdAt: string };
 

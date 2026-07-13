@@ -1,49 +1,10 @@
-// import Head from 'next/head';
-// import Navbar from '../components/Navbar';
-// import ScrollToTopButton from "../components/ScrollToTopButton";
-// import HomeIntroOverlay from '../components/BackgroundComponents/HomeIntroOverlay';
-// import TutorInfoCard from '../components/tutor';
-// import TextbookPreview from '../components/Tutor/MainContent/Textbook';
-// import Contact from '../components/Contact';
-// import Footer from '../components/Footer';
-// import DeepSeaBackground from '../components/BackgroundComponents/DeepSeaBackground';
-// import { useSessionIntro } from '../hooks/useSessionIntro';
-
-
-// export default function Tutor() {
-//   const { mode, phase, isIntroPlaying, finishIntro } = useSessionIntro();
-
-//   return (
-//     <>
-//       <Head>
-//         <title>潮汐知響 - Rongcean</title>
-//         <link rel="icon" href="/favicon.ico" />
-//         <link rel="manifest" href="/manifest.json" />
-//         <link rel="apple-touch-icon" href="/icon-192.png" />
-//       </Head>
-//       <div className="relative min-h-screen overflow-hidden">
-//         <Navbar />
-//         <DeepSeaBackground />
-//         {/* <OceanBackground /> */}
-//         <main className="relative z-10">
-//           <TutorInfoCard />
-//           <TextbookPreview />
-//           <Contact tutorMode={true} />
-//           <Footer />
-//         </main>
-//         <ScrollToTopButton />
-//       <HomeIntroOverlay mode={mode} active={isIntroPlaying} onComplete={finishIntro} />
-//       </div>
-//     </>
-//   );
-// }
 import Head from 'next/head';
 import { GetStaticProps } from 'next';
-import Navbar from '../components/Navbar';
-import ScrollToTopButton from "../components/ScrollToTopButton";
+import Navbar from '../components/PublicUI/Navbar';
+import ScrollToTopButton from "../components/PublicUI/ScrollToTopButton";
 import HomeIntroOverlay from '../components/BackgroundComponents/HomeIntroOverlay';
-import Contact from '../components/Contact';
-import Footer from '../components/Footer';
+import Contact from '../components/PublicUI/Contact';
+import Footer from '../components/BackgroundComponents/Footer';
 import DeepSeaBackground from '../components/BackgroundComponents/DeepSeaBackground';
 import { useSessionIntro } from '../hooks/useSessionIntro';
 

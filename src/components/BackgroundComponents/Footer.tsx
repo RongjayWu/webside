@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-const AdminLoginModal = dynamic(() => import('./AdminLoginModal'), { ssr: false });
+const AdminLoginModal = dynamic(() => import('../Admin/AdminLoginModal'), { ssr: false });
 
 export default function Footer() {
   const year = new Date().getFullYear();
