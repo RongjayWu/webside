@@ -16,6 +16,7 @@ export interface Article {
   createdAt: string;     // 前端習慣的小駝峰
   created_at?: string;   // 兼容後端 Supabase 原始欄位
   tags?: string[];       // 🚀 整合進來的標籤名稱陣列
+  view_count?: number;   // 瀏覽數
 }
 
 /** 分類 (Category) 型別 */

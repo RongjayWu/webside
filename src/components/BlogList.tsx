@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import type { Post } from '../types/post'
+import { Article } from '../types/post' // 引入 Post 型別
 
 export default function BlogList() {
 
-  const [posts, setPosts] = useState<Post[]>([])
+  const [posts, setPosts] = useState<Article[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function BlogList() {
         })
 
       if (!error && data) {
-        setPosts(data as Post[])
+        setPosts(data as Article[])
       }
 
       setLoading(false)
