@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Category } from '../../services/posts/categoryService';
+import { Category } from '../../types/post'; // 引入 Category 型別
 import GlassCard from '../../components/PublicUI/GlassCard';
 
 type Props = {
