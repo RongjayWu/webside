@@ -1,10 +1,13 @@
+// src/components/PublicUI/Navbar.tsx
 "use client";
 
 import { useState, useEffect } from "react";
-import { FiSun, FiMoon, FiMenu, FiX, FiHome, FiUser, FiBriefcase, FiUsers, FiAward, FiGrid, FiBookOpen, FiMail, FiChevronDown, FiBook } from "react-icons/fi";
+import { useRouter } from "next/router";
+import { 
+  FiSun, FiMoon, FiMenu, FiX, FiHome, FiUser, FiBriefcase, 
+  FiUsers, FiAward, FiGrid, FiBookOpen, FiMail, FiChevronDown, FiBook 
+} from "react-icons/fi";
 import { FiEdit2, FiList, FiTag } from "react-icons/fi";
-
-import { useRouter } from 'next/router';
 
 type NavbarProps = {
   onAdminLoginClick?: () => void;
@@ -12,53 +15,82 @@ type NavbarProps = {
   adminMode?: boolean;
 };
 
-export default function Navbar({ onAdminLoginClick }: NavbarProps) {
-        // 手機選單點擊自動收起
-        const handleMobileNavClick = (handler?: (e: React.MouseEvent) => void) => (e: React.MouseEvent) => {
-          setMobileOpen(false);
-          if (handler) handler(e);
-        };
-      // 聯繫我按鈕專用邏輯
-      const handleContactClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        if (typeof window !== 'undefined') {
-          const contactEl = document.getElementById('contact');
-          if (contactEl) {
-            contactEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else {
-            router.push('/#contact');
-          }
-        }
-      };
-    // 錨點跳轉/滾動邏輯
-    const handleNavClick = (hash: string) => (e: React.MouseEvent) => {
-      e.preventDefault();
-      if (typeof window !== 'undefined') {
-        if (window.location.pathname !== '/') {
-          router.push('/' + hash);
-        } else {
-          const el = document.getElementById(hash.replace('#', ''));
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }
-      }
-    };
-  const router = require('next/router').useRouter();
+export default function Navbar({ onAdminLoginClick, hideMobileMenu = false, adminMode = false }: NavbarProps) {
+  const router = useRouter();
   const [isAdminNewPost, setIsAdminNewPost] = useState(false);
-  // 由 props 控制是否隱藏漢堡選單，避免 hydration 錯誤
-  const { hideMobileMenu, adminMode } = arguments[0] || {};
   const [darkMode, setDarkMode] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isTutorPage, setIsTutorPage] = useState(false);
+  const [isBlogPage, setIsBlogPage] = useState(false);
+
+  // 錨點跳轉/滾動邏輯 (完美隱藏網址後綴版本)
+  const handleNavClick = (elementId: string) => async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileOpen(false); // 點擊後自動收起手機版選單
+
+    if (typeof window !== 'undefined') {
+      if (router.pathname !== '/') {
+        await router.push('/');
+        setTimeout(() => {
+          const el = document.getElementById(elementId);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      } else {
+        if (elementId === 'hero') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const el = document.getElementById(elementId);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+  };
+
+  // 聯繫我按鈕專用邏輯 (隱藏後綴)
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    if (typeof window !== 'undefined') {
+      if (router.pathname !== '/') {
+        router.push('/').then(() => {
+          setTimeout(() => {
+            const contactEl = document.getElementById('contact');
+            if (contactEl) contactEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 150);
+        });
+      } else {
+        const contactEl = document.getElementById('contact');
+        if (contactEl) contactEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
+  // 後台專用錨點滾動處理 (完美隱藏網址後綴版本)
+  const handleAdminScroll = (targetId: string) => async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileOpen(false);
+
+    if (typeof window !== 'undefined') {
+      if (router.pathname !== '/admin/posts') {
+        await router.push('/admin/posts');
+        setTimeout(() => {
+          const el = document.getElementById(targetId);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      } else {
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
 
   // 深色模式初始化與切換
   useEffect(() => {
-    // 初始化：讀取 localStorage
     const stored = localStorage.getItem('darkMode');
     if (stored !== null) {
       setDarkMode(stored === 'true');
     } else {
-      setDarkMode(true); // 預設深色模式
+      setDarkMode(true);
       localStorage.setItem('darkMode', 'true');
     }
   }, []);
@@ -73,9 +105,15 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
     }
   }, [darkMode]);
 
-  // ...existing code... (已移除滾動顯示/隱藏功能)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsTutorPage(router.pathname === '/tutor');
+      setIsBlogPage(router.pathname === '/blog');
+      setIsAdminNewPost(router.pathname === '/admin/new-post');
+    }
+  }, [router.pathname]);
 
-  // 按鈕樣式（漢堡選單按鈕背景與暗色模式切換一致）
+  // 漢堡選單按鈕樣式
   const burgerButtonClass =
     "p-2 rounded-full shadow backdrop-blur-md transition border border-white/30 dark:border-gray-700/30";
   const burgerButtonStyle = {
@@ -85,128 +123,86 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
     color: darkMode ? '#fff' : '#222',
   };
 
-  // SSR 階段一律為 false，CSR 再判斷路徑
-  const [isTutorPage, setIsTutorPage] = useState(false);
-  const [isBlogPage, setIsBlogPage] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsTutorPage(window.location.pathname === '/tutor');
-      setIsBlogPage(window.location.pathname === '/blog');
-      setIsAdminNewPost(window.location.pathname === '/admin/new-post');
-    }
-  }, []);
-
   return (
     <nav
       className="fixed w-full z-50 shadow backdrop-blur-md bg-gradient-to-r
         from-blue-100/70 via-purple-100/60 to-indigo-100/70
-        dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/80"
+        dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/80
+        border-b border-white/20 dark:border-gray-800/50"
     >
       <div className="max-w-6xl mx-auto px-4 flex justify-between items-center h-16">
         {/* LOGO */}
-        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-wider">
           RJ.Wu
+          {adminMode && (
+            <span className="text-xs ml-2 font-bold text-purple-600 dark:text-purple-400 bg-purple-500/10 dark:bg-purple-400/20 px-2 py-0.5 rounded-md align-middle">
+              後台管理
+            </span>
+          )}
         </div>
 
-        {/* 管理員模式只顯示 LOGO 與管理員功能選單 */}
-        {adminMode ? (
-          <div className="hidden md:flex space-x-6 text-gray-700 dark:text-gray-200">
-            <a href="/admin" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 font-semibold"><FiUser className="inline" />管理員首頁</a>
-            {/* 部落格文章編輯下拉選單 */}
-            <div className="relative group">
-              <button className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 px-2 py-1 rounded font-semibold group-hover:bg-blue-100/30 dark:group-hover:bg-gray-800/40">
-                <FiBook className="inline" />部落格文章編輯 <FiChevronDown className="inline ml-1" />
-              </button>
-              <div className="absolute left-0 mt-2 min-w-[180px] bg-white dark:bg-gray-900 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 text-left">
-                <a href="#new-post" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={(e) => {
-                  e.preventDefault();
-                  if (window.location.pathname !== '/admin/blog') {
-                    window.location.href = '/admin/blog#new-post';
-                  } else {
-                    const el = document.getElementById('new-post');
-                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }}>
-                  <FiEdit2 className="inline" />新增文章
-                </a>
-                <a href="#list" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={(e) => {
-                  e.preventDefault();
-                  if (window.location.pathname !== '/admin/blog') {
-                    window.location.href = '/admin/blog#list';
-                  } else {
-                    const el = document.getElementById('list');
-                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }}>
-                  <FiList className="inline" />文章列表
-                </a>
-                <a href="#category" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={(e) => {
-                  e.preventDefault();
-                  if (window.location.pathname !== '/admin/blog') {
-                    window.location.href = '/admin/blog#category';
-                  } else {
-                    const el = document.getElementById('category');
-                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }}>
-                  <FiTag className="inline" />分類管理
-                </a>
-              </div>
-            </div>
-          </div>
-        ) : hideMobileMenu ? null : (
-          <div className="hidden md:flex space-x-6 text-gray-700 dark:text-gray-200">
-            {isAdminNewPost ? null : (
-              <>
-                <a href="/#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#hero'))}><FiHome className="inline" />首頁</a>
-                <a href="/#about" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#about'))}><FiUser className="inline" />關於我</a>
-                <a href="/#skills" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#skills'))}><FiAward className="inline" />技能專區</a>
-                {/* 經歷分群下拉選單 */}
-                <div className="relative group">
-                  <button className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 px-2 py-1 rounded group-hover:bg-blue-100/30 dark:group-hover:bg-gray-800/40">
-                    <FiBook className="inline" />相關經歷 <FiChevronDown className="inline ml-1" />
-                  </button>
-                  <div className="absolute left-0 mt-2 min-w-[160px] bg-white dark:bg-gray-900 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 text-left">
-                    <a href="/#experience" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#experience'))}><FiBriefcase />工作經歷</a>
-                    <a href="/#study" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#education'))}><FiBook />求學經歷</a>
-                    <a href="/#club" className="px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2" onClick={handleMobileNavClick(handleNavClick('#club'))}><FiUsers />社團經歷</a>
+        {/* 桌面版選單 */}
+        <div className="hidden md:flex items-center space-x-6 text-gray-700 dark:text-gray-200">
+          {adminMode ? (
+            <>
+              <a href="/admin" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 font-semibold">
+                <FiUser className="inline" />管理員首頁
+              </a>
+              {/* 🚀 桌面版：擴增與修正感應範圍的部落格編輯下拉選單 */}
+              <div className="relative group py-2">
+                <button className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 px-3 py-1.5 rounded-xl font-semibold group-hover:bg-white/60 dark:group-hover:bg-gray-800/60">
+                  <FiBook className="inline" />部落格文章編輯 <FiChevronDown className="inline ml-1" />
+                </button>
+                <div className="absolute left-0 top-full w-full min-w-[180px] pt-2 opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-200 z-10">
+                  <div className="bg-white/90 dark:bg-gray-950/90 backdrop-blur-md rounded-xl shadow-xl p-1 text-left border border-white/20 dark:border-gray-800/80">
+                    <a href="/" className="px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-800/70 rounded-lg flex items-center gap-2 text-gray-800 dark:text-gray-200 transition" onClick={handleAdminScroll('new-post')}>
+                      <FiEdit2 className="inline text-blue-500" />新增文章
+                    </a>
+                    <a href="/" className="px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-800/70 rounded-lg flex items-center gap-2 text-gray-800 dark:text-gray-200 transition" onClick={handleAdminScroll('list')}>
+                      <FiList className="inline text-purple-500" />文章列表
+                    </a>
+                    <a href="/" className="px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-800/70 rounded-lg flex items-center gap-2 text-gray-800 dark:text-gray-200 transition" onClick={handleAdminScroll('category')}>
+                      <FiTag className="inline text-indigo-500" />分類管理
+                    </a>
+                    {/* 🚀 桌面下拉增設：標籤綜合管理 */}
+                    <a href="/" className="px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-800/70 rounded-lg flex items-center gap-2 text-gray-800 dark:text-gray-200 transition" onClick={handleAdminScroll('tag-manager')}>
+                      <FiTag className="inline text-emerald-500" />標籤管理
+                    </a>
                   </div>
                 </div>
-                <a href="/#portfolio" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#portfolio'))}><FiGrid className="inline" />作品集</a>
-                {/* <a href="/blog" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1"><FiBookOpen className="inline" />迷航日誌</a> */}
-                <a href="/tutor" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={() => setMobileOpen(false)}><FiBookOpen className="inline" />家教資訊</a>
-                <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleContactClick)}><FiMail className="inline" />聯繫我</a>
+              </div>
+            </>
+          ) : (
+            !hideMobileMenu && !isAdminNewPost && (
+              <>
+                <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 font-medium" onClick={handleNavClick('hero')}><FiHome className="inline" />首頁</a>
+                <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 font-medium" onClick={handleNavClick('about')}><FiUser className="inline" />關於我</a>
+                <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 font-medium" onClick={handleNavClick('skills')}><FiAward className="inline" />技能專區</a>
+                
+                {/* 經歷分群下拉選單 */}
+                <div className="relative group py-2">
+                  <button className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 px-2 py-1 rounded font-medium group-hover:bg-blue-100/30 dark:group-hover:bg-gray-800/40">
+                    <FiBook className="inline" />相關經歷 <FiChevronDown className="inline ml-1" />
+                  </button>
+                  <div className="absolute left-0 top-full w-full min-w-[160px] pt-2 opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-200 z-10">
+                    <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-xl shadow-lg p-1 text-left border border-white/20 dark:border-gray-800/50">
+                      <a href="/" className="px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-lg flex items-center gap-2 text-sm text-gray-800 dark:text-gray-200" onClick={handleNavClick('experience')}><FiBriefcase />工作經歷</a>
+                      <a href="/" className="px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-lg flex items-center gap-2 text-sm text-gray-800 dark:text-gray-200" onClick={handleNavClick('study')}><FiBook />求學經歷</a>
+                      <a href="/" className="px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-lg flex items-center gap-2 text-sm text-gray-800 dark:text-gray-200" onClick={handleNavClick('club')}><FiUsers />社團經歷</a>
+                    </div>
+                  </div>
+                </div>
+                
+                <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 font-medium" onClick={handleNavClick('portfolio')}><FiGrid className="inline" />作品集</a>
+                <a href="/tutor" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 font-medium" onClick={() => setMobileOpen(false)}><FiBookOpen className="inline" />家教資訊</a>
+                <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1 font-medium" onClick={handleContactClick}><FiMail className="inline" />聯繫我</a>
               </>
-            )}
-          </div>
-        )}
+            )
+          )}
+        </div>
 
-        {/* 按鈕區 */}
-  <div className="flex items-center space-x-4">
-          {/* 暗色模式切換 */}
-          {/* <button
-            onClick={() => setDarkMode(!darkMode)}
-            className={
-              `p-2 rounded-full shadow-lg backdrop-blur-md transition border border-white/30 dark:border-gray-700/30
-              ring-2 ring-blue-400/40 dark:ring-blue-500/60
-              hover:ring-4 hover:ring-blue-400/80 dark:hover:ring-blue-500/90
-              animate-glow`
-            }
-            style={{
-              background: darkMode
-                ? 'linear-gradient(90deg, rgba(30,41,59,0.7) 0%, rgba(59,130,246,0.5) 100%)'
-                : 'linear-gradient(90deg, rgba(165,219,255,0.7) 0%, rgba(147,197,253,0.5) 100%)',
-              color: darkMode ? '#fff' : '#222',
-              boxShadow: darkMode
-                ? '0 0 16px 4px rgba(59,130,246,0.5), 0 0 8px 2px rgba(147,197,253,0.3)'
-                : '0 0 16px 4px rgba(59,130,246,0.4), 0 0 8px 2px rgba(165,219,255,0.3)',
-            }}
-          >
-            {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
-          </button> */}
-
-          {/* /admin/new-post 或 hideMobileMenu 不顯示漢堡選單 */}
+        {/* 漢堡按鈕 */}
+        <div className="flex items-center space-x-4">
           {(!isAdminNewPost && !hideMobileMenu) && (
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -219,26 +215,43 @@ export default function Navbar({ onAdminLoginClick }: NavbarProps) {
         </div>
       </div>
 
-      {/* 手機選單：/admin/new-post 不顯示 */}
-      {!isAdminNewPost && mobileOpen && (
+      {/* 手機版選單 */}
+      {!isAdminNewPost && !hideMobileMenu && mobileOpen && (
         <div
-          className="md:hidden text-gray-700 dark:text-gray-200 px-4 py-2 space-y-2 flex flex-col items-center bg-gradient-to-r from-blue-100/40 via-purple-100/30 to-indigo-100/40 dark:from-gray-900/40 dark:via-gray-800/30 dark:to-gray-900/40 backdrop-blur-lg rounded-xl shadow-lg"
-          style={{
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-          }}
+          className="md:hidden text-gray-700 dark:text-gray-200 px-4 py-4 space-y-3 flex flex-col items-stretch bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl rounded-b-2xl shadow-xl border-t border-white/10 dark:border-gray-800/50"
         >
-          {isAdminNewPost ? null : (
+          {adminMode ? (
             <>
-              <a href="/#hero" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#hero'))}><FiHome className="inline" />首頁</a>
-              <a href="/#about" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#about'))}><FiUser className="inline" />關於我</a>
-              <a href="/#skills" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#skills'))}><FiAward className="inline" />技能專區</a>
-              <a href="/#experience" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#experience'))}><FiBriefcase />工作經歷</a>
-              <a href="/#club" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#club'))}><FiUsers />社團經歷</a>
-              <a href="/#study" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#study'))}><FiBook />求學經歷</a>
-              <a href="/#portfolio" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleNavClick('#portfolio'))}><FiGrid className="inline" />作品集</a>
-              <a href="/tutor" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={() => setMobileOpen(false)}><FiBookOpen className="inline" />家教資訊</a>
-              <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-1" onClick={handleMobileNavClick(handleContactClick)}><FiMail className="inline" />聯繫我</a>
+              <a href="/admin" className="hover:bg-blue-50 dark:hover:bg-gray-800/60 p-2.5 rounded-xl transition flex items-center gap-2 font-semibold" onClick={() => setMobileOpen(false)}>
+                <FiUser className="text-blue-500" />管理員首頁
+              </a>
+              <div className="border-t border-gray-200 dark:border-gray-800 my-1"></div>
+              <p className="text-xs font-bold text-gray-400 dark:text-gray-500 px-2.5 uppercase tracking-wider">部落格快速操作</p>
+              <a href="/" className="hover:bg-blue-50 dark:hover:bg-gray-800/60 p-2.5 rounded-xl transition flex items-center gap-2 text-sm pl-4" onClick={handleAdminScroll('new-post')}>
+                <FiEdit2 className="text-blue-500" />新增文章
+              </a>
+              <a href="/" className="hover:bg-blue-50 dark:hover:bg-gray-800/60 p-2.5 rounded-xl transition flex items-center gap-2 text-sm pl-4" onClick={handleAdminScroll('list')}>
+                <FiList className="text-purple-500" />文章列表
+              </a>
+              <a href="/" className="hover:bg-blue-50 dark:hover:bg-gray-800/60 p-2.5 rounded-xl transition flex items-center gap-2 text-sm pl-4" onClick={handleAdminScroll('category')}>
+                <FiTag className="text-indigo-500" />分類管理
+              </a>
+              {/* 🚀 手機版增設：標籤綜合管理 */}
+              <a href="/" className="hover:bg-blue-50 dark:hover:bg-gray-800/60 p-2.5 rounded-xl transition flex items-center gap-2 text-sm pl-4" onClick={handleAdminScroll('tag-manager')}>
+                <FiTag className="text-emerald-500" />標籤管理
+              </a>
+            </>
+          ) : (
+            <>
+              <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-2 p-2 rounded-lg" onClick={handleNavClick('hero')}><FiHome />首頁</a>
+              <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-2 p-2 rounded-lg" onClick={handleNavClick('about')}><FiUser />關於我</a>
+              <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-2 p-2 rounded-lg" onClick={handleNavClick('skills')}><FiAward />技能專區</a>
+              <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-2 p-2 rounded-lg" onClick={handleNavClick('experience')}><FiBriefcase />工作經歷</a>
+              <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-2 p-2 rounded-lg" onClick={handleNavClick('club')}><FiUsers />社團經歷</a>
+              <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-2 p-2 rounded-lg" onClick={handleNavClick('study')}><FiBook />求學經歷</a>
+              <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-2 p-2 rounded-lg" onClick={handleNavClick('portfolio')}><FiGrid />作品集</a>
+              <a href="/tutor" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-2 p-2 rounded-lg" onClick={() => setMobileOpen(false)}><FiBookOpen />家教資訊</a>
+              <a href="/" className="hover:text-blue-500 dark:hover:text-blue-400 transition flex items-center gap-2 p-2 rounded-lg" onClick={handleContactClick}><FiMail />聯繫我</a>
             </>
           )}
         </div>

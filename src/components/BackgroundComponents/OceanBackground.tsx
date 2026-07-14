@@ -116,11 +116,11 @@ export default function OceanBackground() {
         />
       )}
 
-      <OceanBubbles scrollDepth={scrollDepth} mousePosition={mousePosition} />
+      {/* <OceanBubbles scrollDepth={scrollDepth} mousePosition={mousePosition} /> */}
 
       {/* 海流波浪效果 - 深海變慢變暗 - 已刪除 */}
 
-      <OceanParticles scrollDepth={scrollDepth} />
+      {/* <OceanParticles scrollDepth={scrollDepth} /> */}
 
       {/* 深海生物光效 - 只在最深處顯示 */}
       {scrollDepth > 0.8 && (

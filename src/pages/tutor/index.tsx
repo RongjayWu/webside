@@ -1,29 +1,29 @@
 import Head from 'next/head';
 import { GetStaticProps } from 'next';
-import Navbar from '../components/PublicUI/Navbar';
-import ScrollToTopButton from "../components/PublicUI/ScrollToTopButton";
-import HomeIntroOverlay from '../components/BackgroundComponents/HomeIntroOverlay';
-import Contact from '../components/PublicUI/Contact';
-import Footer from '../components/BackgroundComponents/Footer';
-import DeepSeaBackground from '../components/BackgroundComponents/DeepSeaBackground';
-import { useSessionIntro } from '../hooks/useSessionIntro';
+import Navbar from '../../components/PublicUI/Navbar';
+import ScrollToTopButton from "../../components/PublicUI/ScrollToTopButton";
+import HomeIntroOverlay from '../../components/BackgroundComponents/HomeIntroOverlay';
+import Contact from '../../components/PublicUI/Contact';
+import Footer from '../../components/BackgroundComponents/Footer';
+import DeepSeaBackground from '../../components/BackgroundComponents/DeepSeaBackground';
+import { useSessionIntro } from '../../hooks/useSessionIntro';
 
 // 引入新架構的型態與組件
-import { TutorProfileData } from '../types/tutor';
-import ProfileCard from '../components/Tutor/LeftSidebar/ProfileCard';
-import TeachingStatus from '../components/Tutor/RightSidebar/TeachingStatus';
-import Navigation from '../components/Tutor/LeftSidebar/Navigation';
+import { TutorProfileData } from '../../types/tutor';
+import ProfileCard from '../../components/Tutor/LeftSidebar/ProfileCard';
+import TeachingStatus from '../../components/Tutor/RightSidebar/TeachingStatus';
+import Navigation from '../../components/Tutor/LeftSidebar/Navigation';
 
-import TeachingJourney from '../components/Tutor/MainContent/TeachingJourney';
-import TeachingPhilosophy from '../components/Tutor/MainContent/TeachingPhilosophy';
-import TeachingApproach from '../components/Tutor/MainContent/TeachingApproach';
-import Subjects from '../components/Tutor/MainContent/Subjects';
-import StudentGrowthStories from '../components/Tutor/MainContent/StudentGrowthStories';
-import FeaturedTeachingCases from '../components/Tutor/MainContent/FeaturedTeachingCases';
+import TeachingJourney from '../../components/Tutor/MainContent/TeachingJourney';
+import TeachingPhilosophy from '../../components/Tutor/MainContent/TeachingPhilosophy';
+import TeachingApproach from '../../components/Tutor/MainContent/TeachingApproach';
+import Subjects from '../../components/Tutor/MainContent/Subjects';
+import StudentGrowthStories from '../../components/Tutor/MainContent/StudentGrowthStories';
+import FeaturedTeachingCases from '../../components/Tutor/MainContent/FeaturedTeachingCases';
 
-import TeachingHours from '../components/Tutor/RightSidebar/TeachingHours';
-import CurrentNextLesson from '../components/Tutor/RightSidebar/CurrentNextLesson';
-import CasesSummary from '../components/Tutor/RightSidebar/CasesSummary';
+import TeachingHours from '../../components/Tutor/RightSidebar/TeachingHours';
+import CurrentNextLesson from '../../components/Tutor/RightSidebar/CurrentNextLesson';
+import CasesSummary from '../../components/Tutor/RightSidebar/CasesSummary';
 
 // 定義 Page 組件接收的 Props 型態
 interface TutorPageProps {
@@ -120,7 +120,7 @@ export const getStaticProps: GetStaticProps<TutorPageProps> = async () => {
       { id: "c1", subjectType: "統測資訊科", grade: "高三", year: 2026, focus: "統測專業科目突破" },
       { id: "c2", subjectType: "會考數學", grade: "國三", year: 2026, focus: "幾何圖形破題特訓" }
     ],
-    totalHours: 1286,
+    totalHours: 3068,
     lessonSchedule: {
       subjectName: "統測專業科目（一）",
       timeSlot: "19:00 - 21:00",
