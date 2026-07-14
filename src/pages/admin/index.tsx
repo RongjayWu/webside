@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Navbar from '../../components/PublicUI/Navbar';
 import Footer from '../../components/BackgroundComponents/Footer';
 import OceanBackground from '../../components/BackgroundComponents/OceanBackground';
+import ScrollToTopButton from '../../components/PublicUI/ScrollToTopButton';
 
 export default function AdminHome() {
   return (
@@ -19,6 +20,7 @@ export default function AdminHome() {
           </p>
         </main>
         <Footer />
+        <ScrollToTopButton />
         <OceanBackground />
       </div>
     </>
