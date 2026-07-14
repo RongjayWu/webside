@@ -13,7 +13,7 @@ interface Post {
   created_at: string;
 }
 
-export default function Blog() {
+export default function AdminBlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
