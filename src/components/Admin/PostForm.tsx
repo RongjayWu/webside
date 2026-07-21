@@ -1,17 +1,19 @@
 // src/components/Admin/PostForm.tsx
-import { useState, useEffect } from 'react';
-import GlassCard from '../PublicUI/GlassCard'; // 🚀 請依你實際存放 GlassCard 的路徑引入
+import { useState, useEffect, useCallback } from 'react';
+import GlassCard from '../PublicUI/GlassCard';
+import { tagService } from '../../services/posts/tagService'; // 🚀 請確認 tagService 路徑
+import { Tag } from '../../types/post';                 // 🚀 請確認 Tag 型別路徑
 
 interface PostFormProps {
   categories: any[];
   initialData?: any;       // 接收從資料庫撈出來的舊資料
   onSubmit: (formData: any) => void; // 儲存時觸發的外層函式
   loading?: boolean;       // 按鈕的載入狀態
-  error?: string;         // 錯誤訊息
+  error?: string;          // 錯誤訊息
 }
 
 export default function PostForm({ initialData, categories, onSubmit, loading, error }: PostFormProps) {
-  // 依據資料庫欄位建立相對應的狀態 (State)
+  // 表單核心欄位狀態
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [summary, setSummary] = useState('');
@@ -23,7 +25,46 @@ export default function PostForm({ initialData, categories, onSubmit, loading, e
   const [coverImage, setCoverImage] = useState('');
   const [categoryId, setCategoryId] = useState('');
 
-  // 當 initialData 傳入時，精確回填所有舊資料
+  // 🏷️ 標籤系統相關狀態
+  const [availableTags, setAvailableTags] = useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]); // 存放已選擇的標籤名稱
+  const [tagInput, setTagInput] = useState('');
+  const [loadingTags, setLoadingTags] = useState(true);
+
+  // 🚀 1. 抽離撈取標籤邏輯，支援初次載入與事件觸發更新
+  const fetchTags = useCallback(async () => {
+    try {
+      setLoadingTags(true);
+      const data = await tagService.getAllTags();
+      const tagsList = data || [];
+      setAvailableTags(tagsList);
+
+      // 🔄 自動同步：若原本選取的標籤在其他地方被刪除，自動從 selectedTags 移除
+      setSelectedTags((prevSelected) =>
+        prevSelected.filter((selectedName) =>
+          tagsList.some((t) => t.name === selectedName)
+        )
+      );
+    } catch (err) {
+      console.error('撈取標籤失敗:', err);
+    } finally {
+      setLoadingTags(false);
+    }
+  }, []);
+
+  // 🚀 2. 掛載時撈取標籤，並監聽全域 tags-updated 事件
+  useEffect(() => {
+    fetchTags();
+
+    const handleTagsUpdated = () => fetchTags();
+    window.addEventListener('tags-updated', handleTagsUpdated);
+
+    return () => {
+      window.removeEventListener('tags-updated', handleTagsUpdated);
+    };
+  }, [fetchTags]);
+
+  // 3. 當 initialData 傳入時，精確回填所有舊資料（包含標籤與分類）
   useEffect(() => {
     if (initialData) {
       setTitle(initialData.title || '');
@@ -36,8 +77,61 @@ export default function PostForm({ initialData, categories, onSubmit, loading, e
       setMetaDescription(initialData.meta_description || '');
       setCoverImage(initialData.cover_image || '');
       setCategoryId(initialData.category_id || '');
+
+      // 回填舊標籤
+      if (Array.isArray(initialData.tags)) {
+        const formattedTags = initialData.tags.map((t: any) =>
+          typeof t === 'string' ? t : t.name
+        );
+        setSelectedTags(formattedTags);
+      }
     }
   }, [initialData]);
+
+  // 切換/選擇標籤
+  const toggleTag = (tagName: string) => {
+    if (selectedTags.includes(tagName)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tagName));
+    } else {
+      setSelectedTags([...selectedTags, tagName]);
+    }
+  };
+
+  // 新增自定義標籤（即時寫入 DB 並選取）
+  const handleAddCustomTag = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && tagInput.trim()) {
+      e.preventDefault();
+      const newTagName = tagInput.trim();
+
+      // 檢查該標籤是否已在資料庫現有清單中
+      const existingTag = availableTags.find(
+        (t) => t.name.toLowerCase() === newTagName.toLowerCase()
+      );
+
+      if (existingTag) {
+        if (!selectedTags.includes(existingTag.name)) {
+          setSelectedTags((prev) => [...prev, existingTag.name]);
+        }
+      } else {
+        // 不存在則呼叫 API 寫入 Supabase 資料庫
+        try {
+          const createdTag = await tagService.createTag(newTagName);
+          setAvailableTags((prev) => [createdTag, ...prev]);
+          setSelectedTags((prev) => [...prev, createdTag.name]);
+          // 廣播給其他標籤元件（如 TagManager）更新
+          window.dispatchEvent(new Event('tags-updated'));
+        } catch (err) {
+          alert('新增標籤至資料庫失敗');
+        }
+      }
+      setTagInput(''); // 清空輸入框
+    }
+  };
+
+  // 移除已選取的標籤
+  const removeTag = (tagToRemove: string) => {
+    setSelectedTags(selectedTags.filter((tag) => tag !== tagToRemove));
+  };
 
   // 表單送出處理
   const handleSubmit = (e: React.FormEvent) => {
@@ -53,7 +147,8 @@ export default function PostForm({ initialData, categories, onSubmit, loading, e
       meta_title: metaTitle,
       meta_description: metaDescription,
       cover_image: coverImage,
-      category_id: categoryId || null, // 若為空則轉為 null
+      category_id: categoryId || null,
+      tags: selectedTags, // 打包送出已選標籤
     });
   };
 
@@ -96,6 +191,23 @@ export default function PostForm({ initialData, categories, onSubmit, loading, e
             />
           </div>
 
+          {/* 📂 文章分類選單 */}
+          <div>
+            <label className="block text-sm font-medium mb-1">文章分類</label>
+            <select
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 bg-white/50 dark:bg-gray-900/50 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-blue-500 cursor-pointer"
+            >
+              <option value="" className="bg-white dark:bg-gray-800">無分類</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id} className="bg-white dark:bg-gray-800">
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div>
             <label className="block text-sm font-medium mb-1">文章摘要 *</label>
             <textarea
@@ -123,12 +235,12 @@ export default function PostForm({ initialData, categories, onSubmit, loading, e
         <h3 className="text-lg font-bold text-blue-700 dark:text-blue-300 border-b border-white/20 dark:border-gray-700/50 pb-2 mb-4">
           發布設定
         </h3>
-        
-        <div className="space-y-4 text-gray-900 dark:text-gray-100">
+
+        <div className="space-y-6 text-gray-900 dark:text-gray-100">
+          {/* 發布狀態與精選文章 */}
           <div className="flex flex-wrap gap-6 items-center">
             <div>
               <label className="block text-sm font-medium mb-1">發布狀態</label>
-              {/* 🚀 下拉選單風格統一優化：套用一致的 border、圓角與毛玻璃背景 */}
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
@@ -145,40 +257,82 @@ export default function PostForm({ initialData, categories, onSubmit, loading, e
                 id="featured"
                 checked={featured}
                 onChange={(e) => setFeatured(e.target.checked)}
-                className="h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-700 rounded focus:ring-blue-500"
+                className="h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-700 rounded focus:ring-blue-500 cursor-pointer"
               />
-              <label htmlFor="featured" className="ml-2 block text-sm font-medium">
+              <label htmlFor="featured" className="ml-2 block text-sm font-medium cursor-pointer">
                 設為精選文章
               </label>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">封面圖網址 (URL)</label>
+          {/* 🏷️ 文章標籤設定區塊 */}
+          <div className="border-t border-white/10 dark:border-gray-800/50 pt-4">
+            <label className="block text-sm font-medium mb-2">文章標籤 (多選 / 自定義)</label>
+            
+            {/* 1. 自定義標籤輸入框 */}
+            <div className="mb-3">
               <input
                 type="text"
-                value={coverImage}
-                onChange={(e) => setCoverImage(e.target.value)}
-                className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 bg-white/50 dark:bg-gray-900/50 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-blue-500"
-                placeholder="https://example.com/image.jpg"
+                placeholder="輸入新標籤後按 Enter 新增..."
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={handleAddCustomTag}
+                className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white/50 dark:bg-gray-900/50 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:border-blue-500 transition"
               />
             </div>
+
+            {/* 2. 已選擇的標籤膠囊顯示區 */}
+            {selectedTags.length > 0 && (
+              <div className="mb-3">
+                <span className="text-xs text-gray-500 dark:text-gray-400 block mb-1.5">已選擇：</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedTags.map((tagName) => (
+                    <span
+                      key={tagName}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-600 dark:bg-blue-400/20 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                    >
+                      #{tagName}
+                      <button
+                        type="button"
+                        onClick={() => removeTag(tagName)}
+                        className="hover:text-red-500 transition-colors ml-0.5 focus:outline-none"
+                      >
+                        &times;
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 3. 點擊選取現有標籤區 */}
             <div>
-              <label className="block text-sm font-medium mb-1">文章分類</label>
-              {/* 🚀 下拉選單風格統一優化：套用一致的 border、圓角與毛玻璃背景 */}
-              <select
-                value={categoryId}
-                onChange={(e) => setCategoryId(e.target.value)}
-                className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 bg-white/50 dark:bg-gray-900/50 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-blue-500 cursor-pointer"
-              >
-                <option value="" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">選擇文章分類 (選填)</option>
-                {(categories || []).map((cat) => (
-                  <option key={cat.id} value={cat.id} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
+              <span className="text-xs text-gray-500 dark:text-gray-400 block mb-1.5">點擊選擇現有標籤：</span>
+              {loadingTags ? (
+                <div className="text-xs text-gray-400 py-1">標籤載入中...</div>
+              ) : availableTags.length === 0 ? (
+                <div className="text-xs text-gray-400 py-1">資料庫尚無標籤，請在上方輸入新增</div>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {availableTags.map((tag) => {
+                    const isSelected = selectedTags.includes(tag.name);
+                    return (
+                      <button
+                        key={tag.id}
+                        type="button"
+                        onClick={() => toggleTag(tag.name)}
+                        className={`px-3 py-1 rounded-lg text-xs transition-all border ${
+                          isSelected
+                            ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                            : 'bg-white/30 dark:bg-gray-800/40 text-gray-700 dark:text-gray-300 border-gray-300/60 dark:border-gray-700/60 hover:bg-white/60 dark:hover:bg-gray-800/80'
+                        }`}
+                      >
+                        {isSelected ? '✓ ' : '+ '}{tag.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -212,7 +366,7 @@ export default function PostForm({ initialData, categories, onSubmit, loading, e
         </div>
       </GlassCard>
 
-      {/* 🚀 新按鈕組：改為使用 GlassCard 包裹，且文字修正為「儲存文章」 */}
+      {/* 按鈕組 */}
       <GlassCard className="flex justify-end pt-4 border-t border-white/10 dark:border-gray-700/30 transform-none hover:transform-none hover:scale-100">
         <button
           type="submit"
