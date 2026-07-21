@@ -1,4 +1,3 @@
-import { supabase } from '../../lib/supabase';
 import { Category } from '../../types/post'; // 引入 Category 型別
 
 export const categoryService = {

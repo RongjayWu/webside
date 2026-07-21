@@ -17,10 +17,28 @@ export default function TagManager({ tags, onEdit, onDelete }: Props) {
     setEditName(tag.name);
   };
 
+  // 🚀 儲存修改：修改成功後發送廣播事件
   const handleSave = async (id: string) => {
     if (!editName.trim()) return;
-    await onEdit(id, editName.trim());
-    setEditingId(null);
+    try {
+      await onEdit(id, editName.trim());
+      setEditingId(null);
+      // 發送標籤更新通知
+      window.dispatchEvent(new Event('tags-updated'));
+    } catch (err) {
+      console.error('修改標籤失敗:', err);
+    }
+  };
+
+  // 🚀 執行刪除：刪除成功後發送廣播事件
+  const handleDelete = async (id: string) => {
+    try {
+      await onDelete(id);
+      // 發送標籤更新通知
+      window.dispatchEvent(new Event('tags-updated'));
+    } catch (err) {
+      console.error('刪除標籤失敗:', err);
+    }
   };
 
   return (
@@ -41,12 +59,16 @@ export default function TagManager({ tags, onEdit, onDelete }: Props) {
           <tbody>
             {(!tags || tags.length === 0) && (
               <tr>
-                <td colSpan={3} className="text-center py-6 text-gray-400 dark:text-gray-500">目前沒有建立任何標籤。</td>
+                <td colSpan={3} className="text-center py-6 text-gray-400 dark:text-gray-500">
+                  目前沒有建立任何標籤。
+                </td>
               </tr>
             )}
             {tags?.map((tag) => (
-              <tr key={tag.id} className="hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors border-b border-gray-100 dark:border-gray-800/50">
-                
+              <tr
+                key={tag.id}
+                className="hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors border-b border-gray-100 dark:border-gray-800/50"
+              >
                 {/* 標籤名稱（編輯狀態切換） */}
                 <td className="px-4 py-2">
                   {editingId === tag.id ? (
@@ -75,22 +97,30 @@ export default function TagManager({ tags, onEdit, onDelete }: Props) {
                       <button
                         onClick={() => handleSave(tag.id)}
                         className="px-3 py-1 bg-emerald-500 text-white rounded-lg shadow hover:bg-emerald-600 font-semibold text-xs transition-all"
-                      >儲存</button>
+                      >
+                        儲存
+                      </button>
                       <button
                         onClick={() => setEditingId(null)}
                         className="px-3 py-1 bg-gray-400 text-white rounded-lg shadow hover:bg-gray-500 font-semibold text-xs transition-all"
-                      >取消</button>
+                      >
+                        取消
+                      </button>
                     </div>
                   ) : (
                     <div className="inline-flex gap-2">
                       <button
                         onClick={() => startEdit(tag)}
                         className="px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg shadow hover:from-blue-700 hover:to-purple-700 font-semibold text-xs transition-all"
-                      >修改</button>
+                      >
+                        修改
+                      </button>
                       <button
-                        onClick={() => onDelete(tag.id)}
+                        onClick={() => handleDelete(tag.id)}
                         className="px-3 py-1 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 font-semibold text-xs transition-all"
-                      >刪除</button>
+                      >
+                        刪除
+                      </button>
                     </div>
                   )}
                 </td>

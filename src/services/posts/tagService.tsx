@@ -1,41 +1,43 @@
-import { supabase } from '../../lib/supabase';
+// src/services/tagService.ts
 import { Tag } from '../../types/post'; // 引入 Tag 型別
 
 export const tagService = {
-  /** 取得所有標籤 */
+  /** 取得所有標籤 (GET) */
   async getAllTags(): Promise<Tag[]> {
-    const { data, error } = await supabase
-      .from('tags')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) throw new Error(error.message);
-    return data || [];
+    const res = await fetch('/api/db-tag');
+    if (!res.ok) throw new Error('撈取標籤失敗');
+    return res.json();
   },
 
-  /** 修改標籤名稱 (同步自動更新 slug) */
-  async updateTag(id: string, newName: string): Promise<void> {
-    const newSlug = newName
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s\u4e00-\u9fa5-]/g, '')
-      .replace(/[\s_-]+/g, '-');
-
-    const { error } = await supabase
-      .from('tags')
-      .update({ name: newName, slug: newSlug })
-      .eq('id', id);
-
-    if (error) throw new Error(error.message);
+  /** 新增標籤 (POST) */
+  async createTag(name: string): Promise<Tag> {
+    const res = await fetch('/api/db-tag', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name }),
+    });
+    if (!res.ok) throw new Error('新增標籤失敗');
+    return res.json();
   },
 
-  /** 刪除標籤 (因為有 CASCADE，中間表的關聯會自動被資料庫清除) */
+  /** 修改標籤名稱 (PUT) */
+  async updateTag(id: string, name: string): Promise<Tag> {
+    const res = await fetch('/api/db-tag', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, name }),
+    });
+    if (!res.ok) throw new Error('修改標籤失敗');
+    return res.json();
+  },
+
+  /** 刪除標籤 (DELETE) */
   async deleteTag(id: string): Promise<void> {
-    const { error } = await supabase
-      .from('tags')
-      .delete()
-      .eq('id', id);
-
-    if (error) throw new Error(error.message);
+    const res = await fetch('/api/db-tag', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    if (!res.ok && res.status !== 204) throw new Error('刪除標籤失敗');
   }
 };

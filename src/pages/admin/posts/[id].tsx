@@ -4,7 +4,8 @@ import { postService } from '../../../services/posts/articleService';
 import { categoryService} from '../../../services/posts/categoryService'; // 1. 引入分類服務
 import PostForm from '../../../components/Admin/PostForm';
 import { Category } from '../../../types/post'; // 2. 引入 Category 型別
-
+import OceanBackround from '../../../components/BackgroundComponents/OceanBackground';
+import ScrollToTopButton from '../../../components/PublicUI/ScrollToTopButton';
 export default function EditPostPage() {
   const router = useRouter();
   const { id } = router.query;
@@ -59,15 +60,14 @@ export default function EditPostPage() {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       {/* 標頭 ... */}
-      <div className="bg-white p-6 border rounded-lg shadow-sm">
-        {/* 4. 把撈到的 categories 傳進去 */}
         <PostForm 
           initialData={post} 
           categories={categories} 
           onSubmit={handleFormSubmit} 
           loading={submitting} 
         />
-      </div>
+      <ScrollToTopButton />
+      <OceanBackround />
     </div>
   );
 }
