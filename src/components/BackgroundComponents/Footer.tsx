@@ -35,7 +35,7 @@ export default function Footer() {
   return (
     <footer className="w-full text-center py-4 text-sm text-gray-500 dark:text-gray-400 bg-transparent mt-8 relative z-20">
       <span>
-       Rongcan © {year}. All rights reserved. |  
+       Rongcean © {year}. All rights reserved. |  
         {isAdmin ? (
           <a href="/" className="hover:text-blue-500" style={{textDecoration: 'none'}} onClick={handleAdminClick}> Back to Index</a>
         ) : (
