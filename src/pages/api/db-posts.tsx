@@ -1,6 +1,6 @@
 // src/pages/api/db-posts.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabase } from '../../lib/supabase'; // 請確認你的 supabase client 路徑
+import { supabaseAdmin as supabase } from '../../lib/adminsupase'; // 使用 service_role key 的 supabase client
 
 const generateSlug = (text: string) => {
   return text.toLowerCase().trim().replace(/[^\w\s\u4e00-\u9fa5-]/g, '').replace(/[\s_-]+/g, '-');

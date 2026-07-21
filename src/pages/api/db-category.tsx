@@ -1,6 +1,6 @@
 // src/pages/api/db-category.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabase } from '../../lib/supabase';
+import { supabaseAdmin as supabase } from '../../lib/adminsupase'; // 使用 service_role key 的 supabase client
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
